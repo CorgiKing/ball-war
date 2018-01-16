@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ball-war-app</string>
+    <string name="app_name">球球战争2</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="go_to_game">进 入 游 戏</string>
 
 </resources>
