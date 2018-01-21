@@ -12,7 +12,8 @@
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" >
+        android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
+        android:name="org.nineteens.ballwar.app.BallWarApplication">
         <activity
             android:name="org.nineteens.ballwar.app.activity.LauncherActivity"
             android:screenOrientation="sensorLandscape"
@@ -28,7 +29,16 @@
             android:name="org.nineteens.ballwar.app.activity.HomePageActivity"
             android:screenOrientation="sensorLandscape"
             android:label="@string/app_name">
-          
+        </activity>
+        <activity
+            android:name="org.nineteens.ballwar.app.activity.NewGameActivity"
+            android:screenOrientation="sensorLandscape"
+            android:label="@string/app_name">
+        </activity>
+        <activity
+            android:name="org.nineteens.ballwar.app.activity.UserInfoActivity"
+            android:screenOrientation="sensorLandscape"
+            android:label="@string/app_name">
         </activity>
     </application>
 

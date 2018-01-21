@@ -2,16 +2,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/grassland"
     tools:context="org.nineteens.ballwar.app.activity.HomePageActivity" >
 
     <Button
-        android:id="@+id/btn_start_game"
+        android:id="@+id/btn_new_game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="100dp"
-        android:text="@string/go_to_game"
+        android:layout_centerVertical="true"
+        android:text="新 建 游 戏"
         android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/btn_lan_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/btn_new_game"
+        android:layout_below="@+id/btn_new_game"
+        android:text="加 入 游 戏"
+        android:textSize="30sp" />
+
+    <ImageButton
+        android:id="@+id/ibtn_user_info"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/icon" />
 
 </RelativeLayout>
