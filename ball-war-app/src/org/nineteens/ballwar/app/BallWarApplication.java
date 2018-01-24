@@ -4,7 +4,6 @@ import org.nineteens.ballwar.app.manager.SharedPreferencesManager;
 import org.nineteens.ballwar.app.model.AppConstant;
 import org.nineteens.ballwar.app.model.Role;
 import org.nineteens.ballwar.app.model.Room;
-import org.nineteens.ballwar.app.model.User;
 import org.nineteens.ballwar.app.util.SerializeUtil;
 
 import android.app.Application;
@@ -12,7 +11,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 public class BallWarApplication extends Application {
-	private User user;
 	private Role role;
 	private Room room;
 
@@ -50,14 +48,6 @@ public class BallWarApplication extends Application {
 				return r;
 			}
 		});
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	public Role getRole() {

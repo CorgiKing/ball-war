@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.net.Socket;
 
 import org.goaler.ballwar.io.DataTransfer;
-import org.goaler.ballwar.io.Msg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +23,7 @@ public class BioTcpSerialDataTransfer implements DataTransfer {
 		ois = new ObjectInputStream(socket.getInputStream());
 	}
 
+	@Override
 	public boolean output(Serializable serial) {
 		try {
 			oos.writeObject(serial);
@@ -34,12 +34,16 @@ public class BioTcpSerialDataTransfer implements DataTransfer {
 		return false;
 	}
 
-	public Msg input() {
+	@Override
+	public <T> T input(Class<T> clazz) {
 		try {
 			Object obj = ois.readObject();
-			if (obj instanceof Msg) {
-				return (Msg)obj;
+			if (clazz.isInstance(obj)) {
+				return clazz.cast(obj);
 			}
+//			if (clazz.isAssignableFrom(obj.getClass())) {
+//				return clazz.cast(obj);
+//			}
 		} catch (ClassNotFoundException e) {
 			log.info("接收数据失败！{}",e.getMessage());
 		} catch (IOException e) {

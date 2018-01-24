@@ -21,7 +21,7 @@ public class TcpServerTest {
 			@Override
 			public void run() {
 				while(true){
-				Msg msg = transfer.input();
+				Msg msg = transfer.input(Msg.class);
 				System.out.println(msg);
 				}
 			}

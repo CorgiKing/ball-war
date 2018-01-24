@@ -4,5 +4,5 @@ import java.io.Serializable;
 
 public interface DataTransfer {
 	boolean output(Serializable seria);
-	Msg input();
+	<T> T input(Class<T> clazz);
 }
