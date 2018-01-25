@@ -2,22 +2,22 @@ package org.goaler.ballwar.model;
 
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Random;
 
 import org.goaler.ballwar.client.GameRun;
 
-public class GameRoom implements Serializable{
-	
+public class GameRoom implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3745522594706185776L;
-	
+
 	private String title;
 	private String description;
 	private String pwd;
-	private Map<Integer, Role> roles;
-	
-	private transient GameRun gameRun;
+	private Role owner;
+	private Map<String, Role> roles;
 
 	public String getTitle() {
 		return title;
@@ -43,20 +43,41 @@ public class GameRoom implements Serializable{
 		this.pwd = pwd;
 	}
 
-	public Map<Integer, Role> getRoles() {
+	public Map<String, Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Map<Integer, Role> roles) {
-		this.roles = roles;
+	public Role getRole(String name) {
+		return roles.get(name);
 	}
 
-	public GameRun getGameRun() {
-		return gameRun;
+	/**
+	 * 添加游戏角色，并返回其在本房间昵称
+	 * @param role
+	 * @return
+	 */
+	public Role addRole(Role role) {
+		String name = role.getName();
+		Role r = roles.get(name);
+		Random random = new Random();
+		while (r != null) {
+			name += random.nextInt(100);
+			r = roles.get(name);
+			if (r != null) {
+				role.setName(name);
+			}
+		}
+		roles.put(role.getName(), role);
+		return role;
 	}
 
-	public void setGameRun(GameRun gameRun) {
-		this.gameRun = gameRun;
+	public Role getOwner() {
+		return owner;
 	}
-	
+
+	public void setOwner(Role owner) {
+		Role role = addRole(owner);
+		this.owner = role;
+	}
+
 }

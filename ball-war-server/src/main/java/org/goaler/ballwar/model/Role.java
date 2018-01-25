@@ -7,6 +7,7 @@ public class Role implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1403174129911081788L;
+	
 	private String name;
 
 	public String getName() {

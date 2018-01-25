@@ -32,4 +32,10 @@ public class BioUdpSerialDataTransfer implements DataTransfer {
 		return null;
 	}
 
+	@Override
+	public String getIp() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

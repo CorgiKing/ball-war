@@ -18,6 +18,7 @@ public class BioTcpSerialDataTransfer implements DataTransfer {
 	private ObjectInputStream ois;
 	
 	public BioTcpSerialDataTransfer(Socket socket) throws IOException{
+		socket.setSoTimeout(RW_TIMEOUT);
 		this.socket = socket;
 		oos = new ObjectOutputStream(socket.getOutputStream());
 		ois = new ObjectInputStream(socket.getInputStream());
@@ -52,6 +53,7 @@ public class BioTcpSerialDataTransfer implements DataTransfer {
 		return null;
 	}
 	
+	@Override
 	public String getIp(){
 		return socket.getInetAddress().getHostAddress();
 	}
