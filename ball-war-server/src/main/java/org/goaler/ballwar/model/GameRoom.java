@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.Random;
 
-import org.goaler.ballwar.client.GameRun;
-
 public class GameRoom implements Serializable {
 
 	/**

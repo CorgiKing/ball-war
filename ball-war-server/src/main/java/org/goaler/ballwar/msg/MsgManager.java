@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.goaler.ballwar.io.DataTransfer;
-import org.goaler.ballwar.io.Msg;
 
 public class MsgManager implements Runnable {
 	private int errorNum;

@@ -1,4 +1,4 @@
-package org.goaler.ballwar.io;
+package org.goaler.ballwar.msg;
 
 import java.io.Serializable;
 import java.util.Map;
