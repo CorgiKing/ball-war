@@ -4,11 +4,12 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.Random;
 
-public class GameRoom implements Serializable {
-
-	/**
-	 * 
-	 */
+/**
+ * 游戏房间基础信息
+ * @author Goaler
+ *
+ */
+public class RoomInfo implements Serializable {
 	private static final long serialVersionUID = 3745522594706185776L;
 
 	private String title;

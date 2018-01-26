@@ -6,5 +6,4 @@ package org.goaler.ballwar.entity;
  *
  */
 public class Monad extends Cell {
-
 }

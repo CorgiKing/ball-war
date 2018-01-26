@@ -1,19 +1,18 @@
 package org.goaler.ballwar.client;
 
-import org.goaler.ballwar.model.GameRoom;
+import org.goaler.ballwar.msg.Msg;
+import org.goaler.ballwar.msg.MsgFans;
 
-public class GameRun {
-	private GameRoom room;
+public class GameRun implements MsgFans{
+	private RoomRun roomRun;
 	
-	public GameRun(GameRoom room){
-		this.room = room;
+	public GameRun(RoomRun roomRun) {
+		this.roomRun = roomRun;
 	}
 
-	public GameRoom getRoom() {
-		return room;
-	}
-
-	public void setRoom(GameRoom room) {
-		this.room = room;
+	@Override
+	public boolean handleMsg(Msg msg) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
