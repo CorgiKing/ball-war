@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/grassland"
-    tools:context="org.nineteens.ballwar.app.activity.HomePageActivity" >
+    tools:context="org.goaler.ballwar.app.activity.HomePageActivity" >
 
     <Button
         android:id="@+id/btn_new_game"
