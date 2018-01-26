@@ -6,7 +6,7 @@ import java.net.Socket;
 
 import org.goaler.ballwar.client.ClientRunnable;
 import org.goaler.ballwar.client.SimpleClientRun;
-import org.goaler.ballwar.io.bio.BioTcpSerialDataTransfer;
+import org.goaler.ballwar.common.io.bio.BioTcpSerialDataTransfer;
 import org.goaler.ballwar.util.ThreadPoolService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

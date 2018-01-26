@@ -1,4 +1,4 @@
-package org.goaler.ballwar.entity;
+package org.goaler.ballwar.common.entity;
 
 /**
  * 海胆

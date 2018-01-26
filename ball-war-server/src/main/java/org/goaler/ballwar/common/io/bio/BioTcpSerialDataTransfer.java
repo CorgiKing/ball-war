@@ -1,4 +1,4 @@
-package org.goaler.ballwar.io.bio;
+package org.goaler.ballwar.common.io.bio;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -6,7 +6,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
 
-import org.goaler.ballwar.io.DataTransfer;
+import org.goaler.ballwar.common.io.DataTransfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -5,8 +5,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.TimeUnit;
 
-import org.goaler.ballwar.io.bio.BioTcpSerialDataTransfer;
-import org.goaler.ballwar.msg.Msg;
+import org.goaler.ballwar.common.io.bio.BioTcpSerialDataTransfer;
+import org.goaler.ballwar.common.msg.Msg;
 
 public class TcpServerTest {
 

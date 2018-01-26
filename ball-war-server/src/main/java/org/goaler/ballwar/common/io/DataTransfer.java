@@ -1,4 +1,4 @@
-package org.goaler.ballwar.io;
+package org.goaler.ballwar.common.io;
 
 import java.io.Serializable;
 

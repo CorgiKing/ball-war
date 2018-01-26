@@ -1,4 +1,4 @@
-package org.goaler.ballwar.model;
+package org.goaler.ballwar.common.model;
 
 import java.io.Serializable;
 import java.util.Map;

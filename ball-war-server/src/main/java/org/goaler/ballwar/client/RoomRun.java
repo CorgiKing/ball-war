@@ -1,6 +1,6 @@
 package org.goaler.ballwar.client;
 
-import org.goaler.ballwar.model.RoomInfo;
+import org.goaler.ballwar.common.model.RoomInfo;
 
 /**
  * 游戏房间运行类

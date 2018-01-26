@@ -1,10 +1,10 @@
-package org.goaler.ballwar.msg;
+package org.goaler.ballwar.common.msg;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.goaler.ballwar.io.DataTransfer;
+import org.goaler.ballwar.common.io.DataTransfer;
 
 public class MsgManager implements Runnable {
 	private int errorNum;

@@ -1,11 +1,11 @@
 package org.goaler.ballwar.client;
 
-import org.goaler.ballwar.io.DataTransfer;
-import org.goaler.ballwar.model.Device;
-import org.goaler.ballwar.model.RoomInfo;
-import org.goaler.ballwar.model.Role;
-import org.goaler.ballwar.msg.Msg;
-import org.goaler.ballwar.msg.MsgFans;
+import org.goaler.ballwar.common.io.DataTransfer;
+import org.goaler.ballwar.common.model.Device;
+import org.goaler.ballwar.common.model.Role;
+import org.goaler.ballwar.common.model.RoomInfo;
+import org.goaler.ballwar.common.msg.Msg;
+import org.goaler.ballwar.common.msg.MsgFans;
 import org.goaler.ballwar.util.ThreadPoolService;
 
 public class SimpleClientRun extends ClientRunnable implements MsgFans{

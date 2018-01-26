@@ -1,4 +1,4 @@
-package org.goaler.ballwar.msg;
+package org.goaler.ballwar.common.msg;
 
 public interface MsgFans {
 	/**

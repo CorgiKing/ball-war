@@ -1,11 +1,11 @@
-package org.goaler.ballwar.io.bio;
+package org.goaler.ballwar.common.io.bio;
 
 import java.io.Serializable;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
-import org.goaler.ballwar.io.DataTransfer;
+import org.goaler.ballwar.common.io.DataTransfer;
 
 public class BioUdpSerialDataTransfer implements DataTransfer {
 

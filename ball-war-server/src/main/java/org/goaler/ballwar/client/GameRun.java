@@ -1,7 +1,7 @@
 package org.goaler.ballwar.client;
 
-import org.goaler.ballwar.msg.Msg;
-import org.goaler.ballwar.msg.MsgFans;
+import org.goaler.ballwar.common.msg.Msg;
+import org.goaler.ballwar.common.msg.MsgFans;
 
 public class GameRun implements MsgFans{
 	private RoomRun roomRun;

@@ -1,7 +1,7 @@
 package org.goaler.ballwar.client;
 
-import org.goaler.ballwar.io.DataTransfer;
-import org.goaler.ballwar.msg.MsgManager;
+import org.goaler.ballwar.common.io.DataTransfer;
+import org.goaler.ballwar.common.msg.MsgManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

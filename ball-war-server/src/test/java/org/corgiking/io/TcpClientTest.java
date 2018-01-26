@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import org.goaler.ballwar.io.bio.BioTcpSerialDataTransfer;
-import org.goaler.ballwar.msg.Msg;
+import org.goaler.ballwar.common.io.bio.BioTcpSerialDataTransfer;
+import org.goaler.ballwar.common.msg.Msg;
 
 public class TcpClientTest {
 
