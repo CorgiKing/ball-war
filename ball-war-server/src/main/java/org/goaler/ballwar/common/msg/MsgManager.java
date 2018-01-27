@@ -39,7 +39,7 @@ public class MsgManager implements Runnable {
 	 * @return
 	 */
 	private boolean checkMsg(Msg msg) {
-		if (msg == null) {
+		if (!Msg.isLegal(msg)) {
 			errorNum++;
 			return false;
 		}

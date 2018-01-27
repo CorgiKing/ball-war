@@ -6,7 +6,9 @@ import org.slf4j.helpers.MessageFormatter;
 public class TestMain {
 
 	public static void main(String[] args) {
-		System.out.println(test("asd","asdfadf"));
+		Class<TestMain> clazz = TestMain.class;
+		boolean instance = clazz.isInstance(null);
+		System.out.println(instance);
 
 	}
 

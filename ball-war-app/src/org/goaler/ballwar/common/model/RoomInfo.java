@@ -1,11 +1,13 @@
 package org.goaler.ballwar.common.model;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
 /**
  * 游戏房间基础信息
+ * 
  * @author Goaler
  *
  */
@@ -16,7 +18,7 @@ public class RoomInfo implements Serializable {
 	private String description;
 	private String pwd;
 	private Role owner;
-	private Map<String, Role> roles;
+	private Map<String, Role> roles = new HashMap<>();
 
 	public String getTitle() {
 		return title;
@@ -52,6 +54,7 @@ public class RoomInfo implements Serializable {
 
 	/**
 	 * 添加游戏角色，并返回其在本房间昵称
+	 * 
 	 * @param role
 	 * @return
 	 */
@@ -77,6 +80,12 @@ public class RoomInfo implements Serializable {
 	public void setOwner(Role owner) {
 		Role role = addRole(owner);
 		this.owner = role;
+	}
+
+	@Override
+	public String toString() {
+		return "RoomInfo [title=" + title + ", description=" + description + ", pwd=" + pwd + ", owner=" + owner
+				+ ", roles=" + roles + "]";
 	}
 
 }

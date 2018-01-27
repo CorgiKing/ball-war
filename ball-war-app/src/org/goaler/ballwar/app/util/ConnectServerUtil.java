@@ -20,7 +20,7 @@ public class ConnectServerUtil {
 		}).start();
 	}
 
-	private static Socket connect(String ip) {
+	public static Socket connect(String ip) {
 
 		InetAddress address = null;
 		try {

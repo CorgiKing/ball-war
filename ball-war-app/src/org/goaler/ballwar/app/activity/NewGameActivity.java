@@ -11,6 +11,7 @@ import org.goaler.ballwar.app.util.ToastUtil;
 import org.goaler.ballwar.common.io.DataTransfer;
 import org.goaler.ballwar.common.io.bio.BioTcpSerialDataTransfer;
 import org.goaler.ballwar.common.model.RoomInfo;
+import org.goaler.ballwar.common.msg.Msg;
 import org.goaler.ballwar.common.msg.MsgManager;
 
 import android.os.Bundle;
@@ -85,6 +86,29 @@ public class NewGameActivity extends BaseActivity {
 
 	private void startNewGame() {
 		connectServer("192.168.1.109");
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		initInfo();
+		newGameRoom();
+	}
+
+	private void initInfo() {
+		MsgManager msgManager = app.getMsgManager();
+		Msg msg = new Msg();
+		msg.setCmd("initInfo");
+		msg.setParam("role", app.getRole());
+		msgManager.output(msg);
+	}
+
+	private void newGameRoom() {
+		MsgManager msgManager = app.getMsgManager();
+		Msg msg = new Msg();
+		msg.setCmd("newGameRoom");
+		msg.setParam("room", app.getRoom());
+		msgManager.output(msg);
 	}
 
 	public void connectServer(final String ip) {
