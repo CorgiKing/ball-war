@@ -20,7 +20,10 @@ public class MsgManager implements Runnable {
 		while (true) {
 			Msg msg = dataTransfer.input(Msg.class);
 			if (!checkMsg(msg)) {
-				break;
+				if (errorNum > 10) {
+					break;
+				}
+				continue;
 			}
 			noticMsgUpdate(msg);
 			if (Thread.currentThread().isInterrupted()) {
@@ -28,15 +31,17 @@ public class MsgManager implements Runnable {
 			}
 		}
 	}
-	
-	private boolean checkMsg(Msg msg){
+
+	/**
+	 * 返回信息是否合法
+	 * 
+	 * @param msg
+	 * @return
+	 */
+	private boolean checkMsg(Msg msg) {
 		if (msg == null) {
 			errorNum++;
-			if (errorNum > 10) {
-				return false;
-			}
-		}else if (errorNum != 0) {
-			errorNum = 0;
+			return false;
 		}
 		return true;
 	}

@@ -4,9 +4,9 @@ public class ServerFactory {
 	private static Server server;
 	
 	public static Server getInstance(){
-		if (server != null) {
+		if (server == null) {
 			synchronized (ServerFactory.class) {
-				if (server != null) {
+				if (server == null) {
 					server = new SimpleServer();
 				}
 			}
