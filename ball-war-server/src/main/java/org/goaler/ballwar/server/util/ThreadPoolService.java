@@ -1,4 +1,4 @@
-package org.goaler.ballwar.util;
+package org.goaler.ballwar.server.util;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;

@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.goaler.ballwar.common.discover.Discover;
 import org.goaler.ballwar.common.discover.Multicast;
-import org.goaler.ballwar.util.ThreadPoolService;
+import org.goaler.ballwar.server.util.ThreadPoolService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -6,7 +6,7 @@ import org.goaler.ballwar.common.model.Role;
 import org.goaler.ballwar.common.model.RoomInfo;
 import org.goaler.ballwar.common.msg.Msg;
 import org.goaler.ballwar.common.msg.MsgFans;
-import org.goaler.ballwar.util.ThreadPoolService;
+import org.goaler.ballwar.server.util.ThreadPoolService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -93,7 +93,7 @@ public class SimpleClientRun extends ClientRunnable implements MsgFans {
 	 * @param msg
 	 */
 	private void startGame(Msg msg) {
-
+		
 	}
 
 }
