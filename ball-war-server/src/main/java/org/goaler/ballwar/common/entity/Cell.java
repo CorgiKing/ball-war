@@ -35,6 +35,8 @@ public abstract class Cell implements Serializable {
 	 * 频率
 	 */
 	private int moveTime;
+	private float sin;
+	private float cos;
 
 	public int getId() {
 		return id;
@@ -126,6 +128,22 @@ public abstract class Cell implements Serializable {
 
 	public void setMinR(int minR) {
 		this.minR = minR;
+	}
+
+	public float getSin() {
+		return sin;
+	}
+
+	public void setSin(float sin) {
+		this.sin = sin;
+	}
+
+	public float getCos() {
+		return cos;
+	}
+
+	public void setCos(float cos) {
+		this.cos = cos;
 	}
 
 }

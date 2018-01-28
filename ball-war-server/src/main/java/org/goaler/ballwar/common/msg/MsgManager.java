@@ -25,7 +25,7 @@ public class MsgManager implements Runnable {
 				}
 				continue;
 			}
-			noticMsgUpdate(msg);
+			noticeMsgUpdate(msg);
 			if (Thread.currentThread().isInterrupted()) {
 				break;
 			}
@@ -46,7 +46,7 @@ public class MsgManager implements Runnable {
 		return true;
 	}
 
-	public boolean noticMsgUpdate(Msg msg) {
+	public boolean noticeMsgUpdate(Msg msg) {
 		for (MsgFans fans : msgFanses) {
 			boolean hasHandled = fans.handleMsg(msg);
 			if (hasHandled) {
@@ -56,6 +56,11 @@ public class MsgManager implements Runnable {
 		return false;
 	}
 
+	public void registerFans(MsgFans fans, RegCallback call) {
+		this.msgFanses.add(fans);
+		call.call(this);
+	}
+	
 	public void registerFans(MsgFans fans) {
 		this.msgFanses.add(fans);
 	}
@@ -74,5 +79,9 @@ public class MsgManager implements Runnable {
 
 	public void setDataTransfer(DataTransfer dataTransfer) {
 		this.dataTransfer = dataTransfer;
+	}
+	
+	public interface RegCallback{
+		void call(MsgManager msgManager);
 	}
 }

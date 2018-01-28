@@ -6,6 +6,7 @@ import org.goaler.ballwar.common.model.Role;
 import org.goaler.ballwar.common.model.RoomInfo;
 import org.goaler.ballwar.common.msg.Msg;
 import org.goaler.ballwar.common.msg.MsgFans;
+import org.goaler.ballwar.common.msg.MsgManager;
 import org.goaler.ballwar.server.manager.ThreadPoolManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,16 +37,6 @@ public class SimpleClientRun extends ClientRunnable implements MsgFans {
 
 	@Override
 	public boolean handleMsg(Msg msg) {
-		return msgDispatch(msg);
-	}
-
-	/**
-	 * 分发信息
-	 * 
-	 * @param msg
-	 * @return
-	 */
-	private boolean msgDispatch(Msg msg) {
 		switch (msg.getCmd()) {
 		case "initInfo":
 			initInfo(msg);
@@ -72,7 +63,7 @@ public class SimpleClientRun extends ClientRunnable implements MsgFans {
 	private void initInfo(Msg msg) {
 		role = msg.getParam("role", Role.class);
 		device = msg.getParam("device", Device.class);
-		log.info("role-{},device-{}", role, device);
+		log.info("initInfo：role-{},device-{}", role, device);
 	}
 
 	/**
@@ -83,7 +74,7 @@ public class SimpleClientRun extends ClientRunnable implements MsgFans {
 	private void newGameRoom(Msg msg) {
 		RoomInfo room = msg.getParam("room", RoomInfo.class);
 		room.setOwner(role);
-		log.info("room-{}", room);
+		log.info("newGameRoom：room-{}", room);
 		roomRun = new RoomRun(room);
 	}
 
@@ -93,7 +84,21 @@ public class SimpleClientRun extends ClientRunnable implements MsgFans {
 	 * @param msg
 	 */
 	private void startGame(Msg msg) {
-		
+		if (!roomRun.isStarted() && roomRun.getOwner().equals(role)) {
+			// 游戏未开始，并且是房主
+			roomRun.start();
+		}
+		if (roomRun.isStarted()) {
+			gameRun = new GameRun(this.role, this.roomRun);
+			getMsgManager().registerFans(gameRun, new MsgManager.RegCallback() {
+				@Override
+				public void call(MsgManager msgManager) {
+					gameRun.setMsgManager(msgManager);
+				}
+			});
+			gameRun.start();
+			log.info("startGame：开始游戏");
+		}
 	}
 
 }

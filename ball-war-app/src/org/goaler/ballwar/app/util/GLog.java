@@ -18,5 +18,6 @@ public class GLog {
 	private static String format(String format, Object... argArray){
 		FormattingTuple arrayFormat = MessageFormatter.arrayFormat(format, argArray);
 		return arrayFormat.getMessage();
+		
 	}
 }

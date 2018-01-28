@@ -1,11 +1,19 @@
 package org.goaler.ballwar.server.client;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
+import org.goaler.ballwar.common.entity.Hog;
 import org.goaler.ballwar.common.entity.Monad;
+import org.goaler.ballwar.common.model.Role;
 import org.goaler.ballwar.common.model.RoomInfo;
+import org.goaler.ballwar.server.manager.AreaEntityManager;
+import org.goaler.ballwar.server.manager.EntityManager;
 import org.goaler.ballwar.server.soul.CellSoul;
+import org.goaler.ballwar.server.soul.HogSoul;
 import org.goaler.ballwar.server.soul.MonadSoul;
 
 /**
@@ -20,16 +28,45 @@ public class RoomRun {
 	public static final int ROOM_STATE_RUNNING = 2;
 	public static final int ROOM_STATE_CLOSE = 3;
 
+	public static final int MAX_ROLE = 30;
+	public static final int HOG_SIZE_PER_ROLE = 16;
+
 	private RoomInfo room;
 	private int state = ROOM_STATE_QUIET;
+	/**
+	 * 区域管理，将所有entity分别放在不同区域中
+	 */
+	private EntityManager<CellSoul<?>> areaManager;
 
-	private Map<Integer, CellSoul> entitys = new HashMap<>();
+	/**
+	 * 等待被玩家获取的最小hog下标
+	 */
+	private AtomicInteger hogWaiterIndex;
+	/**
+	 * 所有hog
+	 */
+	private List<HogSoul> hogWaiters = new ArrayList<>();
+
+	/**
+	 * 所有的entity
+	 */
+	private Map<Integer, CellSoul<?>> allEntitys = new HashMap<>();
+	/**
+	 * 所有的monad
+	 */
+	private Map<Integer, MonadSoul> monads = new HashMap<>();
+	/**
+	 * 所有hog
+	 */
+	private Map<Integer, HogSoul> hogs = new HashMap<>();
 
 	public RoomRun(RoomInfo room) {
 		this.room = room;
 	}
 
 	public void start() {
+		state = ROOM_STATE_RUNNING;
+		areaManager = new AreaEntityManager();
 		init();
 	}
 
@@ -38,25 +75,89 @@ public class RoomRun {
 	 */
 	private void init() {
 		initMonads(5000);
+		initHogs(MAX_ROLE * HOG_SIZE_PER_ROLE);
 	}
 
-	private void initMonads(int num) {
+	/**
+	 * 初始化num个Hog并不显示
+	 * 
+	 * @param num
+	 */
+	private void initHogs(int num) {
+		hogWaiterIndex = new AtomicInteger();
 		for (int i = 0; i < num; ++i) {
-			createMonadSoul();
+			HogSoul hogSoul = createHogSoul();
+			allEntitys.put(hogSoul.getId(), hogSoul);
+			hogWaiters.add(hogSoul);
+			hogs.put(hogSoul.getId(), hogSoul);
+			areaManager.addEntity(hogSoul);
 		}
 	}
 
-	private CellSoul createMonadSoul() {
+	/**
+	 * 初始化num个Monad并显示
+	 * 
+	 * @param num
+	 */
+	private void initMonads(int num) {
+		for (int i = 0; i < num; ++i) {
+			MonadSoul monadSoul = createMonadSoul();
+			monadSoul.setDisplay(true);
+			allEntitys.put(monadSoul.getId(), monadSoul);
+			monads.put(monadSoul.getId(), monadSoul);
+			areaManager.addEntity(monadSoul);
+		}
+	}
+
+	public MonadSoul createMonadSoul() {
 		Monad monad = new Monad();
 		MonadSoul monadSoul = new MonadSoul(monad);
+		return monadSoul;
+	}
+
+	public HogSoul createHogSoul() {
+		Hog hog = new Hog();
+		HogSoul hogSoul = new HogSoul(hog);
+		allEntitys.put(hogSoul.getId(), hogSoul);
+		return hogSoul;
+	}
+
+	public List<HogSoul> fetchHog(int n) {
+		int index = hogWaiterIndex.getAndAdd(n);
+		List<HogSoul> list = null;
+		if (index < hogWaiters.size()) {
+			list = new ArrayList<>();
+			for (int i = 0; i < n; ++i) {
+				list.add(hogWaiters.get(index + i));
+			}
+		}
+		return list;
+	}
+
+	public HogSoul fetchHog() {
+		int index = hogWaiterIndex.incrementAndGet();
+		if (index < hogWaiters.size()) {
+			return hogWaiters.get(index);
+		}
 		return null;
 	}
 
-	public void addEntity(CellSoul cell) {
-		entitys.put(cell.genId(), cell);
+	public RoomInfo getRoomInfo() {
+		return room;
 	}
 
-	public RoomInfo exportRoomInfo() {
-		return room;
+	public boolean isStarted() {
+		if (state != ROOM_STATE_QUIET) {
+			return true;
+		}
+		return false;
+	}
+
+	public Role getOwner() {
+		return room.getOwner();
+	}
+
+	public Role addRole(Role role) {
+		return room.addRole(role);
 	}
 }

@@ -10,7 +10,7 @@ public abstract class Server {
 	
 	public void start() {
 		prepare();
-		run();
+		running();
 		destroy();
 	}
 
@@ -18,7 +18,7 @@ public abstract class Server {
 
 	}
 
-	abstract void run();
+	abstract void running();
 
 	protected void destroy() {
 

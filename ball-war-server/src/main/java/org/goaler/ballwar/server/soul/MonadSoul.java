@@ -7,6 +7,11 @@ public class MonadSoul extends CellSoul<Monad>{
 	public MonadSoul(Monad info) {
 		super(info);
 	}
+
+	@Override
+	public void run() {
+		
+	}
 	
 	
 }

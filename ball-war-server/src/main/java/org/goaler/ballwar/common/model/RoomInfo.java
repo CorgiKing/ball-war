@@ -3,7 +3,7 @@ package org.goaler.ballwar.common.model;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * 游戏房间基础信息
@@ -61,11 +61,10 @@ public class RoomInfo implements Serializable {
 	public Role addRole(Role role) {
 		String name = role.getName();
 		Role r = roles.get(name);
-		Random random = new Random();
 		while (r != null) {
-			name += random.nextInt(100);
+			name += ThreadLocalRandom.current().nextInt(100);
 			r = roles.get(name);
-			if (r != null) {
+			if (r == null) {
 				role.setName(name);
 			}
 		}

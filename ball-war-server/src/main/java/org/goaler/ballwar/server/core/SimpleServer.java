@@ -18,7 +18,7 @@ public class SimpleServer extends Server {
 	}
 
 	@Override
-	void run() {
+	void running() {
 		ServerSocket serverSocket = null;
 		try {
 			serverSocket = new ServerSocket(5019);

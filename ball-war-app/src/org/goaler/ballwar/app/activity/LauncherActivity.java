@@ -1,5 +1,6 @@
 package org.goaler.ballwar.app.activity;
 
+import org.apache.log4j.Logger;
 import org.goaler.ballwar.app.R;
 
 import android.content.Intent;

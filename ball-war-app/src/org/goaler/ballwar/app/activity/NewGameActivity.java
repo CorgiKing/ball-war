@@ -93,6 +93,11 @@ public class NewGameActivity extends BaseActivity {
 		}
 		initInfo();
 		newGameRoom();
+		
+		MsgManager msgManager = app.getMsgManager();
+		Msg msg = new Msg();
+		msg.setCmd("startGame");
+		msgManager.output(msg);
 	}
 
 	private void initInfo() {
