@@ -6,16 +6,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.goaler.ballwar.server.soul.CellSoul;
+import org.goaler.ballwar.common.entity.Cell;
 
-public class AreaEntityManager extends EntityManager<CellSoul<?>> {
+public class AreaEntityManager<T extends Cell> extends EntityManager<T> {
 
-	private Map<String, ConcurrentHashMap<Integer, CellSoul<?>>> areasMap;
+	private Map<String, ConcurrentHashMap<Integer, T>> areasMap;
 
 	public AreaEntityManager() {
 		// 初始化
-		areasMap = new HashMap<String, ConcurrentHashMap<Integer, CellSoul<?>>>();
-		ConcurrentHashMap<Integer, CellSoul<?>> map;
+		areasMap = new HashMap<String, ConcurrentHashMap<Integer, T>>();
+		ConcurrentHashMap<Integer, T> map;
 		for (int i = 1; i <= Math.ceil(GameMapManager.WIDTH / SIDE_LEN); i++) {
 			for (int j = 1; j <= Math.ceil(GameMapManager.HEIGHT / SIDE_LEN); j++) {
 				map = new ConcurrentHashMap<>();
@@ -24,28 +24,27 @@ public class AreaEntityManager extends EntityManager<CellSoul<?>> {
 		}
 	}
 
-	public static void main(String[] args) {
-		AreaEntityManager manager = new AreaEntityManager();
-		String id = manager.getAreaid(00, 00);
-		System.out.println(id);
-	}
-
 	@Override
-	public String getAreaid(CellSoul<?> c) {
+	public String getAreaid(T c) {
 		return getAreaid(c.getX(), c.getY());
 	}
 
 	@Override
 	public String getAreaid(int x, int y) {
-		int xIndex = (int) Math.ceil(x / SIDE_LEN);
-		xIndex = xIndex == 0 ? 1 : xIndex;
-		int yIndex = (int) Math.ceil(y / SIDE_LEN);
-		yIndex = yIndex == 0 ? 1 : yIndex;
+		int xIndex = getIndex(x);
+		int yIndex = getIndex(y);
 		return xIndex + KEY_SEP_SIGN + yIndex;
 	}
 
 	@Override
-	public void updateEntityAreaid(CellSoul<?> c) {
+	public int getIndex(int n) {
+		int index = (int) Math.ceil(n / SIDE_LEN);
+		index = index == 0 ? 1 : index;
+		return index;
+	}
+
+	@Override
+	public void updateEntityAreaid(T c) {
 		String areaid = getAreaid(c);// 根据坐标获得areaid，现在真实位置id
 		String oldAreaId = c.getAreaId();
 		if (oldAreaId != null && !areaid.equals(oldAreaId)) {// 上次存入的位置areaid
@@ -59,14 +58,14 @@ public class AreaEntityManager extends EntityManager<CellSoul<?>> {
 	}
 
 	@Override
-	public void addEntity(CellSoul<?> c) {
+	public void addEntity(T c) {
 		String areaid = getAreaid(c);
 		areasMap.get(areaid).put(c.getId(), c);
 		c.setAreaId(areaid);
 	}
 
 	@Override
-	public void remove(CellSoul<?> c) {
+	public void remove(T c) {
 		String areaId = c.getAreaId();
 		if (areaId != null) {
 			areasMap.get(areaId).remove(areaId);
@@ -75,19 +74,19 @@ public class AreaEntityManager extends EntityManager<CellSoul<?>> {
 	}
 
 	@Override
-	public List<?> getAreaEntities(CellSoul<?> c) {
+	public List<T> getAreaEntities(T c) {
 		String areaId = c.getAreaId();
 		return getAreaEntities(areaId);
 	}
 
 	@Override
-	public List<?> getAreaEntities(int x, int y) {
+	public List<T> getAreaEntities(int x, int y) {
 		String areaId = getAreaid(x, y);
 		return getAreaEntities(areaId);
 	}
 
 	@Override
-	public List<?> getAreaEntities(String areaid) {
+	public List<T> getAreaEntities(String areaid) {
 		return new ArrayList<>(areasMap.get(areaid).values());
 	}
 

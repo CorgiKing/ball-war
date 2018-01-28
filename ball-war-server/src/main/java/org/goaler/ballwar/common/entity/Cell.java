@@ -38,6 +38,11 @@ public abstract class Cell implements Serializable {
 	private float sin;
 	private float cos;
 
+	/**
+	 * 区域id
+	 */
+	private String areaId;
+
 	public int getId() {
 		return id;
 	}
@@ -144,6 +149,14 @@ public abstract class Cell implements Serializable {
 
 	public void setCos(float cos) {
 		this.cos = cos;
+	}
+
+	public String getAreaId() {
+		return areaId;
+	}
+
+	public void setAreaId(String areaId) {
+		this.areaId = areaId;
 	}
 
 }

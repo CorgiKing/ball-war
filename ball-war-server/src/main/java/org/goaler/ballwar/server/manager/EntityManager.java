@@ -2,17 +2,17 @@ package org.goaler.ballwar.server.manager;
 
 import java.util.List;
 
-import org.goaler.ballwar.server.soul.CellSoul;
+import org.goaler.ballwar.common.entity.Cell;
 
-public abstract class EntityManager<T extends CellSoul<?>> {
+public abstract class EntityManager<T extends Cell> {
 	/**
 	 * 区域边长
 	 */
-	float SIDE_LEN = 1000;
+	public float SIDE_LEN = 1000;
 	/**
 	 * id中坐标分隔符
 	 */
-	String KEY_SEP_SIGN = "&";
+	public String KEY_SEP_SIGN = "&";
 
 	/**
 	 * 获得个体在管理器的id
@@ -23,6 +23,11 @@ public abstract class EntityManager<T extends CellSoul<?>> {
 	 * 根据坐标获得id
 	 */
 	abstract public String getAreaid(int x, int y);
+
+	/**
+	 * 获取坐标在manager中对应的index
+	 */
+	abstract public int getIndex(int n);
 
 	/**
 	 * 更新管理器中entity
@@ -42,15 +47,15 @@ public abstract class EntityManager<T extends CellSoul<?>> {
 	/**
 	 * 获得个体区域所有个体
 	 */
-	abstract public List<?> getAreaEntities(T c);
+	abstract public List<T> getAreaEntities(T c);
 
 	/**
 	 * 获得坐标区域所有个体
 	 */
-	abstract public List<?> getAreaEntities(int x, int y);
+	abstract public List<T> getAreaEntities(int x, int y);
 
 	/**
 	 * 获得areaid区域所有个体
 	 */
-	abstract public List<?> getAreaEntities(String areaid);
+	abstract public List<T> getAreaEntities(String areaid);
 }

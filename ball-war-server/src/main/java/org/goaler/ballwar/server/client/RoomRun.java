@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.goaler.ballwar.common.entity.Cell;
 import org.goaler.ballwar.common.entity.Hog;
 import org.goaler.ballwar.common.entity.Monad;
 import org.goaler.ballwar.common.model.Role;
@@ -36,7 +37,7 @@ public class RoomRun {
 	/**
 	 * 区域管理，将所有entity分别放在不同区域中
 	 */
-	private EntityManager<CellSoul<?>> areaManager;
+	private EntityManager<Cell> areaManager;
 
 	/**
 	 * 等待被玩家获取的最小hog下标
@@ -66,7 +67,7 @@ public class RoomRun {
 
 	public void start() {
 		state = ROOM_STATE_RUNNING;
-		areaManager = new AreaEntityManager();
+		areaManager = new AreaEntityManager<Cell>();
 		init();
 	}
 
@@ -90,7 +91,7 @@ public class RoomRun {
 			allEntitys.put(hogSoul.getId(), hogSoul);
 			hogWaiters.add(hogSoul);
 			hogs.put(hogSoul.getId(), hogSoul);
-			areaManager.addEntity(hogSoul);
+			areaManager.addEntity(hogSoul.getInfo());
 		}
 	}
 
@@ -105,7 +106,7 @@ public class RoomRun {
 			monadSoul.setDisplay(true);
 			allEntitys.put(monadSoul.getId(), monadSoul);
 			monads.put(monadSoul.getId(), monadSoul);
-			areaManager.addEntity(monadSoul);
+			areaManager.addEntity(monadSoul.getInfo());
 		}
 	}
 

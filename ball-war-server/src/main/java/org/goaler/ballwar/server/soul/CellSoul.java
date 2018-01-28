@@ -9,7 +9,6 @@ public abstract class CellSoul<T extends Cell> implements Runnable {
 	private static final AtomicInteger baseId = new AtomicInteger();
 	private T info;
 	private boolean display;
-	private String areaId;
 
 	public CellSoul(T info) {
 		this.info = info;
@@ -46,13 +45,9 @@ public abstract class CellSoul<T extends Cell> implements Runnable {
 	public int getY() {
 		return info.getY();
 	}
-
-	public String getAreaId() {
-		return areaId;
-	}
-
-	public void setAreaId(String areaId) {
-		this.areaId = areaId;
-	}
 	
+	public int getR(){
+		return info.getR();
+	}
+
 }
