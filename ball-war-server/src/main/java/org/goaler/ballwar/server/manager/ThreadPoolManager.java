@@ -1,16 +1,16 @@
-package org.goaler.ballwar.server.util;
+package org.goaler.ballwar.server.manager;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-public class ThreadPoolService {
+public class ThreadPoolManager {
 	private static ThreadPoolExecutor threadPool;
 	
 	public static ThreadPoolExecutor getThreadPoolInstance(){
 		if (threadPool == null) {
-			synchronized (ThreadPoolService.class) {
+			synchronized (ThreadPoolManager.class) {
 				if (threadPool == null) {
 					newThreadPool();
 				}

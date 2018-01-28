@@ -2,6 +2,8 @@ package org.goaler.ballwar.common.entity;
 
 import java.io.Serializable;
 
+import org.goaler.ballwar.server.manager.GameMapManager;
+
 /**
  * 细胞
  * 
@@ -10,23 +12,29 @@ import java.io.Serializable;
  */
 public abstract class Cell implements Serializable {
 	private static final long serialVersionUID = -7935645635464596772L;
+	private int minR;
+
 	private int id;
 	private int x;
 	private int y;
 	private int r;
 	private int background;
 	/**
+	 * 密度
+	 */
+	private int density;
+	/**
 	 * 质量
 	 */
-	private long mass;
+	private int mass;
 	/**
 	 * 步长
 	 */
-	private int v_step;
+	private int moveStep;
 	/**
 	 * 频率
 	 */
-	private int v_time;
+	private int moveTime;
 
 	public int getId() {
 		return id;
@@ -40,16 +48,28 @@ public abstract class Cell implements Serializable {
 		return x;
 	}
 
-	public void setX(int x) {
-		this.x = x;
+	public void setInnerX(int xx) {
+		if (xx - r >= GameMapManager.MIN_X && xx + r <= GameMapManager.MAX_X) {
+			x = xx;
+		} else if (xx - r < GameMapManager.MIN_X) {
+			x = GameMapManager.MIN_X + r;
+		} else if (xx + r > GameMapManager.MAX_X) {
+			x = GameMapManager.MAX_X - r;
+		}
 	}
 
 	public int getY() {
 		return y;
 	}
 
-	public void setY(int y) {
-		this.y = y;
+	public void setInnerY(int yy) {
+		if (yy - r >= GameMapManager.MIN_Y && yy + r <= GameMapManager.MAX_Y) {
+			y = yy;
+		} else if (yy - r < GameMapManager.MIN_Y) {
+			y = GameMapManager.MIN_Y + r;
+		} else if (yy + r > GameMapManager.MAX_Y) {
+			y = GameMapManager.MAX_Y - r;
+		}
 	}
 
 	public int getR() {
@@ -68,28 +88,44 @@ public abstract class Cell implements Serializable {
 		this.background = background;
 	}
 
-	public long getMass() {
+	public int getMass() {
 		return mass;
 	}
 
-	public void setMass(long mass) {
+	public void setMass(int mass) {
 		this.mass = mass;
 	}
 
-	public int getV_step() {
-		return v_step;
+	public int getMoveStep() {
+		return moveStep;
 	}
 
-	public void setV_step(int v_step) {
-		this.v_step = v_step;
+	public void setMoveStep(int moveStep) {
+		this.moveStep = moveStep;
 	}
 
-	public int getV_time() {
-		return v_time;
+	public int getMoveTime() {
+		return moveTime;
 	}
 
-	public void setV_time(int v_time) {
-		this.v_time = v_time;
+	public void setMoveTime(int moveTime) {
+		this.moveTime = moveTime;
+	}
+
+	public int getDensity() {
+		return density;
+	}
+
+	public void setDensity(int density) {
+		this.density = density;
+	}
+
+	public int getMinR() {
+		return minR;
+	}
+
+	public void setMinR(int minR) {
+		this.minR = minR;
 	}
 
 }

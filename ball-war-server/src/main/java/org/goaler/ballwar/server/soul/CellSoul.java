@@ -4,23 +4,23 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.goaler.ballwar.common.entity.Cell;
 
-public abstract class CellSoul {
+public abstract class CellSoul<T extends Cell>{
 	private static final AtomicInteger baseId = new AtomicInteger();
-	private Cell cell;
+	private T info;
 
-	public CellSoul(Cell cell) {
-		this.cell = cell;
+	public CellSoul(T info) {
+		this.info = info;
 	}
 
-	public int genId() {
+	public static int genId() {
 		return baseId.getAndIncrement();
 	}
 
 	public int getId(){
-		return cell.getId();
+		return info.getId();
 	}
 	
-	public Cell getCell() {
-		return cell;
+	public T getCell() {
+		return info;
 	}
 }

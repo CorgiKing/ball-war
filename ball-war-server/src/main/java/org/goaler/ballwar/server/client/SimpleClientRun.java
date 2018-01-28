@@ -6,7 +6,7 @@ import org.goaler.ballwar.common.model.Role;
 import org.goaler.ballwar.common.model.RoomInfo;
 import org.goaler.ballwar.common.msg.Msg;
 import org.goaler.ballwar.common.msg.MsgFans;
-import org.goaler.ballwar.server.util.ThreadPoolService;
+import org.goaler.ballwar.server.manager.ThreadPoolManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +25,7 @@ public class SimpleClientRun extends ClientRunnable implements MsgFans {
 	@Override
 	public void prepare() {
 		// 建立通讯
-		ThreadPoolService.getThreadPoolInstance().execute(getMsgManager());
+		ThreadPoolManager.getThreadPoolInstance().execute(getMsgManager());
 		getMsgManager().registerFans(this);
 	}
 

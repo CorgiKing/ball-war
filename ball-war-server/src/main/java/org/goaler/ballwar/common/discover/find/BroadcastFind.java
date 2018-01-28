@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.goaler.ballwar.common.discover.Broadcast;
 import org.goaler.ballwar.common.discover.Discover;
-import org.goaler.ballwar.server.util.ThreadPoolService;
+import org.goaler.ballwar.server.manager.ThreadPoolManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,10 +52,10 @@ public class BroadcastFind extends Find implements Discover, Broadcast {
 	private void startTask() {
 		// 发送线程
 		FindTask findTask = new FindTask();
-		ThreadPoolService.getThreadPoolInstance().execute(findTask);
+		ThreadPoolManager.getThreadPoolInstance().execute(findTask);
 		// 接收线程
 		ReceTask receTask = new ReceTask();
-		ThreadPoolService.getThreadPoolInstance().execute(receTask);
+		ThreadPoolManager.getThreadPoolInstance().execute(receTask);
 	}
 
 	private void handle(String ip) {

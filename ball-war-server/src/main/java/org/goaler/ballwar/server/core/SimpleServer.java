@@ -7,7 +7,7 @@ import java.net.Socket;
 import org.goaler.ballwar.common.io.bio.BioTcpSerialDataTransfer;
 import org.goaler.ballwar.server.client.ClientRunnable;
 import org.goaler.ballwar.server.client.SimpleClientRun;
-import org.goaler.ballwar.server.util.ThreadPoolService;
+import org.goaler.ballwar.server.manager.ThreadPoolManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +28,7 @@ public class SimpleServer extends Server {
 				clientSocket = serverSocket.accept();
 				log.info("增加一个玩家：{}", clientSocket.getInetAddress());
 
-				ThreadPoolService.getThreadPoolInstance().execute(createClientRun(clientSocket));
+				ThreadPoolManager.getThreadPoolInstance().execute(createClientRun(clientSocket));
 			}
 		} catch (IOException e) {
 			log.error("服务器异常！", e);
