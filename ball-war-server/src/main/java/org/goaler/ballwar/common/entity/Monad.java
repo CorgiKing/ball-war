@@ -1,9 +1,8 @@
 package org.goaler.ballwar.common.entity;
 
-import org.goaler.ballwar.server.manager.BackgroundManager;
-import org.goaler.ballwar.server.manager.GameMapManager;
-import org.goaler.ballwar.server.soul.CellSoul;
-import org.goaler.ballwar.server.util.Calculator;
+import org.goaler.ballwar.common.manager.BackgroundManager;
+import org.goaler.ballwar.common.manager.GameMapManager;
+import org.goaler.ballwar.common.util.Calculator;
 
 /**
  * 单细胞生物,游戏中最小个体
@@ -16,7 +15,7 @@ public class Monad extends Cell {
 
 	public Monad() {
 		// 设置id
-		setId(CellSoul.genId());
+		setId(Cell.genId());
 		// 设置半径和坐标
 		setMinR(15);
 		setR(getMinR());

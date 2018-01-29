@@ -1,9 +1,8 @@
 package org.goaler.ballwar.common.entity;
 
-import org.goaler.ballwar.server.manager.BackgroundManager;
-import org.goaler.ballwar.server.manager.GameMapManager;
-import org.goaler.ballwar.server.soul.CellSoul;
-import org.goaler.ballwar.server.util.Calculator;
+import org.goaler.ballwar.common.manager.BackgroundManager;
+import org.goaler.ballwar.common.manager.GameMapManager;
+import org.goaler.ballwar.common.util.Calculator;
 
 /**
  * 爱吃的猪
@@ -16,7 +15,7 @@ public class Hog extends Cell {
 
 	public Hog() {
 		// 设置id
-		setId(CellSoul.genId());
+		setId(Cell.genId());
 		// 设置半径和坐标
 		setMinR(50);
 		setR(getMinR());

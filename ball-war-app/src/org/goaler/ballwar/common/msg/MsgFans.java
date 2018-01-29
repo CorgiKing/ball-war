@@ -7,4 +7,5 @@ public interface MsgFans {
 	 * @return
 	 */
 	boolean handleMsg(Msg msg);
+	
 }

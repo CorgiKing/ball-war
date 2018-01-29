@@ -7,17 +7,12 @@ import org.goaler.ballwar.common.entity.Cell;
 import org.goaler.ballwar.server.manager.ThreadPoolManager;
 
 public abstract class CellSoul<T extends Cell> implements Runnable {
-	private static final AtomicInteger baseId = new AtomicInteger();
 	private T info;
 	private boolean display;
 	private AtomicBoolean running = new AtomicBoolean();
 
 	public CellSoul(T info) {
 		this.info = info;
-	}
-
-	public static int genId() {
-		return baseId.getAndIncrement();
 	}
 
 	public void actUp() {

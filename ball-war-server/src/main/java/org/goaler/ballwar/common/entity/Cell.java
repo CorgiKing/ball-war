@@ -1,8 +1,9 @@
 package org.goaler.ballwar.common.entity;
 
 import java.io.Serializable;
+import java.util.concurrent.atomic.AtomicInteger;
 
-import org.goaler.ballwar.server.manager.GameMapManager;
+import org.goaler.ballwar.common.manager.GameMapManager;
 
 /**
  * 细胞
@@ -12,6 +13,7 @@ import org.goaler.ballwar.server.manager.GameMapManager;
  */
 public abstract class Cell implements Serializable {
 	private static final long serialVersionUID = -7935645635464596772L;
+	private static final AtomicInteger baseId = new AtomicInteger();
 	private int minR;
 
 	private int id;
@@ -43,6 +45,10 @@ public abstract class Cell implements Serializable {
 	 */
 	private String areaId;
 
+	public static int genId() {
+		return baseId.getAndIncrement();
+	}
+	
 	public int getId() {
 		return id;
 	}

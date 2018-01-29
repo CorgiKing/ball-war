@@ -7,4 +7,6 @@ package org.goaler.ballwar.common.entity;
  */
 public class Echinus extends Cell {
 
+	private static final long serialVersionUID = 8538891491933555385L;
+
 }

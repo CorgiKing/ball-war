@@ -1,4 +1,4 @@
-package org.goaler.ballwar.server.util;
+package org.goaler.ballwar.common.util;
 
 public class Calculator {
 	public static final float PI = 3.14f;
