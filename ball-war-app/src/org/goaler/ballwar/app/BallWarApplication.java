@@ -1,8 +1,17 @@
 package org.goaler.ballwar.app;
 
+import java.io.IOException;
+import java.net.Socket;
+
+import org.goaler.ballwar.app.activity.LauncherActivity;
 import org.goaler.ballwar.app.manager.SharedPreferencesManager;
 import org.goaler.ballwar.app.model.AppConstant;
+import org.goaler.ballwar.app.util.ConnectServerUtil;
+import org.goaler.ballwar.app.util.GLog;
 import org.goaler.ballwar.app.util.SerializeUtil;
+import org.goaler.ballwar.app.util.ToastUtil;
+import org.goaler.ballwar.common.io.DataTransfer;
+import org.goaler.ballwar.common.io.bio.BioTcpSerialDataTransfer;
 import org.goaler.ballwar.common.model.Role;
 import org.goaler.ballwar.common.model.RoomInfo;
 import org.goaler.ballwar.common.msg.MsgManager;
@@ -55,7 +64,7 @@ public class BallWarApplication extends Application {
 		});
 		Log.i("goaler", "init role:" + role);
 	}
-
+	
 	public void cacheRoom() {
 		spm.save(AppConstant.SP_KEY_ROOM, room);
 		Log.i("goaler", "cache room：" + room);

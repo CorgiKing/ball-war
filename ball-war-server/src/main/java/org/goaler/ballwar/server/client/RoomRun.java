@@ -161,4 +161,9 @@ public class RoomRun {
 	public Role addRole(Role role) {
 		return room.addRole(role);
 	}
+
+	public EntityManager<Cell> getAreaManager() {
+		return areaManager;
+	}
+
 }

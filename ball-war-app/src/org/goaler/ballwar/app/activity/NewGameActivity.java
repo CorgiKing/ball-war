@@ -1,21 +1,17 @@
 package org.goaler.ballwar.app.activity;
 
-import java.io.IOException;
-import java.net.Socket;
-
 import org.goaler.ballwar.app.BallWarApplication;
 import org.goaler.ballwar.app.R;
 import org.goaler.ballwar.app.util.ConnectServerUtil;
-import org.goaler.ballwar.app.util.GLog;
-import org.goaler.ballwar.app.util.ToastUtil;
-import org.goaler.ballwar.common.io.DataTransfer;
-import org.goaler.ballwar.common.io.bio.BioTcpSerialDataTransfer;
+import org.goaler.ballwar.common.model.Device;
 import org.goaler.ballwar.common.model.RoomInfo;
 import org.goaler.ballwar.common.msg.Msg;
 import org.goaler.ballwar.common.msg.MsgManager;
 
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -85,7 +81,7 @@ public class NewGameActivity extends BaseActivity {
 	}
 
 	private void startNewGame() {
-		connectServer("192.168.1.109");
+		connectServer(edit_room_description.getText().toString(), 5019);
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
@@ -93,7 +89,7 @@ public class NewGameActivity extends BaseActivity {
 		}
 		initInfo();
 		newGameRoom();
-		
+
 		MsgManager msgManager = app.getMsgManager();
 		Msg msg = new Msg();
 		msg.setCmd("startGame");
@@ -105,7 +101,19 @@ public class NewGameActivity extends BaseActivity {
 		Msg msg = new Msg();
 		msg.setCmd("initInfo");
 		msg.setParam("role", app.getRole());
+		msg.setParam("device", getDeviceInfo());
 		msgManager.output(msg);
+	}
+
+	private Device getDeviceInfo() {
+		// 手机尺寸
+		WindowManager wm = getWindowManager();
+		DisplayMetrics dm = new DisplayMetrics();
+		wm.getDefaultDisplay().getMetrics(dm);
+		Device device = new Device();
+		device.setWidth(dm.widthPixels);
+		device.setHeight(dm.heightPixels);
+		return device;
 	}
 
 	private void newGameRoom() {
@@ -116,26 +124,14 @@ public class NewGameActivity extends BaseActivity {
 		msgManager.output(msg);
 	}
 
-	public void connectServer(final String ip) {
+	public void connectServer(final String ip, int port) {
 		if (ip != null) {
-			ConnectServerUtil.connect(ip, new ConnectServerUtil.ConCallback() {
+			ConnectServerUtil.connect(ip, port, new ConnectServerUtil.ConCallback() {
 				@Override
-				public void call(Socket socket) {
-					if (socket == null) {
-						return;
-					}
-					DataTransfer dataTransfer = null;
-					try {
-						dataTransfer = new BioTcpSerialDataTransfer(socket);
-					} catch (IOException e) {
-						GLog.error("goaler", "创建TcpDataTransfer失败！ip-{}", ip);
-						return;
-					}
-					app.setMsgManager(new MsgManager(dataTransfer));
-					ToastUtil.showToast(NewGameActivity.this, "成功连接" + ip);
+				public void call(MsgManager msgManager) {
+					app.setMsgManager(msgManager);
 				}
 			});
 		}
-
 	}
 }

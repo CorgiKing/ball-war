@@ -1,14 +1,15 @@
 package org.goaler.ballwar.app.activity;
 
-import org.apache.log4j.Logger;
 import org.goaler.ballwar.app.R;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.Button;
 
 public class LauncherActivity extends BaseActivity {
@@ -17,6 +18,10 @@ public class LauncherActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_launcher);
+		init();
+	}
+
+	private void init() {
 		Button btn_go_to_game = (Button) findViewById(R.id.btn_go_to_game);
 		btn_go_to_game.setOnClickListener(new OnClickListener() {
 			

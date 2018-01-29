@@ -56,11 +56,6 @@ public class MsgManager implements Runnable {
 		return false;
 	}
 
-	public void registerFans(MsgFans fans, RegCallback call) {
-		this.msgFanses.add(fans);
-		call.call(this);
-	}
-	
 	public void registerFans(MsgFans fans) {
 		this.msgFanses.add(fans);
 	}
@@ -81,7 +76,4 @@ public class MsgManager implements Runnable {
 		this.dataTransfer = dataTransfer;
 	}
 	
-	public interface RegCallback{
-		void call(MsgManager msgManager);
-	}
 }

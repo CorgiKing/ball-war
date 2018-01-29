@@ -6,7 +6,6 @@ import org.goaler.ballwar.common.model.Role;
 import org.goaler.ballwar.common.model.RoomInfo;
 import org.goaler.ballwar.common.msg.Msg;
 import org.goaler.ballwar.common.msg.MsgFans;
-import org.goaler.ballwar.common.msg.MsgManager;
 import org.goaler.ballwar.server.manager.ThreadPoolManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,16 +88,27 @@ public class SimpleClientRun extends ClientRunnable implements MsgFans {
 			roomRun.start();
 		}
 		if (roomRun.isStarted()) {
-			gameRun = new GameRun(this.role, this.roomRun);
-			getMsgManager().registerFans(gameRun, new MsgManager.RegCallback() {
-				@Override
-				public void call(MsgManager msgManager) {
-					gameRun.setMsgManager(msgManager);
-				}
-			});
+			gameRun = new GameRun();
+			gameRun.setRole(role);
+			gameRun.setRoomRun(roomRun);
+			gameRun.setDevice(device);
+			gameRun.setMsgManager(getMsgManager());
+			getMsgManager().registerFans(gameRun);
 			gameRun.start();
 			log.info("startGame：开始游戏");
 		}
+	}
+
+	public RoomRun getRoomRun() {
+		return roomRun;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public Device getDevice() {
+		return device;
 	}
 
 }

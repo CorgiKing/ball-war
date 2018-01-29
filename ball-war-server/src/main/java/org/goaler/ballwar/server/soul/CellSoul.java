@@ -1,5 +1,6 @@
 package org.goaler.ballwar.server.soul;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.goaler.ballwar.common.entity.Cell;
@@ -9,6 +10,7 @@ public abstract class CellSoul<T extends Cell> implements Runnable {
 	private static final AtomicInteger baseId = new AtomicInteger();
 	private T info;
 	private boolean display;
+	private AtomicBoolean running = new AtomicBoolean();
 
 	public CellSoul(T info) {
 		this.info = info;
@@ -20,6 +22,7 @@ public abstract class CellSoul<T extends Cell> implements Runnable {
 
 	public void actUp() {
 		ThreadPoolManager.getThreadPoolInstance().execute(this);
+		setDisplay(true);
 	}
 
 	public int getId() {
@@ -38,6 +41,14 @@ public abstract class CellSoul<T extends Cell> implements Runnable {
 		this.display = display;
 	}
 
+	public boolean isRunning() {
+		return running.get();
+	}
+
+	public boolean compareAndSetRunning(boolean expect, boolean update) {
+		return this.running.compareAndSet(expect, update);
+	}
+
 	public int getX() {
 		return info.getX();
 	}
@@ -45,8 +56,8 @@ public abstract class CellSoul<T extends Cell> implements Runnable {
 	public int getY() {
 		return info.getY();
 	}
-	
-	public int getR(){
+
+	public int getR() {
 		return info.getR();
 	}
 
