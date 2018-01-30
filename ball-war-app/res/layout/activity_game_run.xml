@@ -1,0 +1,31 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="org.goaler.ballwar.app.activity.GameRunActivity" >
+
+    <org.goaler.ballwar.app.view.CombatView
+        android:id="@+id/combatView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    
+    <ImageButton
+        android:id="@+id/imgBtn_vomit"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="14dp"
+        android:layout_marginRight="23dp"
+        android:layout_toLeftOf="@+id/imgBtn_split"
+        android:background="@drawable/btn_vomit" />
+
+    <ImageButton
+        android:id="@+id/imgBtn_split"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/imgBtn_vomit"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/btn_split" />
+
+</RelativeLayout>

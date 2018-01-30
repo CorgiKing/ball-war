@@ -1,0 +1,18 @@
+<resources>
+
+    <color name="bule">#0000FF</color>
+    <color name="green">#00FF00</color>
+    <color name="red">#FF0000</color>
+    <color name="map_backcolor">#A2A2A2</color>
+    
+    <color name="color0">#00ff00</color>
+    <color name="color1">#9900ff</color>
+    <color name="color2">#607EF4</color>
+    <color name="color3">#ff00ff</color>
+    <color name="color4">#ff9900</color>
+    <color name="color5">#00ffff</color>
+    <color name="color6">#cc0000</color>
+    <color name="color7">#6aa84f</color>
+    <color name="color8">#20124d</color>
+    <color name="color9">#e69138</color>
+</resources>

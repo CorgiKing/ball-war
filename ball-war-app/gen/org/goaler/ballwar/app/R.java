@@ -10,6 +10,22 @@ package org.goaler.ballwar.app;
 public final class R {
     public static final class attr {
     }
+    public static final class color {
+        public static final int bule=0x7f040000;
+        public static final int color0=0x7f040004;
+        public static final int color1=0x7f040005;
+        public static final int color2=0x7f040006;
+        public static final int color3=0x7f040007;
+        public static final int color4=0x7f040008;
+        public static final int color5=0x7f040009;
+        public static final int color6=0x7f04000a;
+        public static final int color7=0x7f04000b;
+        public static final int color8=0x7f04000c;
+        public static final int color9=0x7f04000d;
+        public static final int green=0x7f040001;
+        public static final int map_backcolor=0x7f040003;
+        public static final int red=0x7f040002;
+    }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
 
@@ -18,42 +34,48 @@ public final class R {
          would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
     
          */
-        public static final int activity_horizontal_margin=0x7f040000;
-        public static final int activity_vertical_margin=0x7f040001;
+        public static final int activity_horizontal_margin=0x7f050000;
+        public static final int activity_vertical_margin=0x7f050001;
     }
     public static final class drawable {
-        public static final int grassland=0x7f020000;
-        public static final int icon=0x7f020001;
+        public static final int btn_split=0x7f020000;
+        public static final int btn_vomit=0x7f020001;
+        public static final int grassland=0x7f020002;
+        public static final int icon=0x7f020003;
     }
     public static final class id {
-        public static final int action_settings=0x7f08000c;
-        public static final int btn_cancel=0x7f080008;
-        public static final int btn_go_to_game=0x7f080003;
-        public static final int btn_lan_game=0x7f080001;
-        public static final int btn_new_game=0x7f080000;
-        public static final int btn_save=0x7f08000b;
-        public static final int btn_start_game=0x7f080007;
-        public static final int edit_role_name=0x7f08000a;
-        public static final int edit_room_description=0x7f080005;
-        public static final int edit_room_pwd=0x7f080006;
-        public static final int edit_room_title=0x7f080004;
-        public static final int ibtn_user_info=0x7f080002;
-        public static final int tv_user=0x7f080009;
+        public static final int action_settings=0x7f09000f;
+        public static final int btn_cancel=0x7f09000b;
+        public static final int btn_go_to_game=0x7f090006;
+        public static final int btn_lan_game=0x7f090004;
+        public static final int btn_new_game=0x7f090003;
+        public static final int btn_save=0x7f09000e;
+        public static final int btn_start_game=0x7f09000a;
+        public static final int combatView=0x7f090000;
+        public static final int edit_role_name=0x7f09000d;
+        public static final int edit_room_description=0x7f090008;
+        public static final int edit_room_pwd=0x7f090009;
+        public static final int edit_room_title=0x7f090007;
+        public static final int ibtn_user_info=0x7f090005;
+        public static final int imgBtn_split=0x7f090002;
+        public static final int imgBtn_vomit=0x7f090001;
+        public static final int tv_user=0x7f09000c;
     }
     public static final class layout {
-        public static final int activity_homepage=0x7f030000;
-        public static final int activity_launcher=0x7f030001;
-        public static final int activity_new_game=0x7f030002;
-        public static final int activity_user_info=0x7f030003;
+        public static final int activity_game_run=0x7f030000;
+        public static final int activity_homepage=0x7f030001;
+        public static final int activity_launcher=0x7f030002;
+        public static final int activity_new_game=0x7f030003;
+        public static final int activity_user_info=0x7f030004;
     }
     public static final class menu {
-        public static final int main=0x7f070000;
+        public static final int main=0x7f080000;
     }
     public static final class string {
-        public static final int action_settings=0x7f050002;
-        public static final int app_name=0x7f050000;
-        public static final int go_to_game=0x7f050003;
-        public static final int hello_world=0x7f050001;
+        public static final int action_settings=0x7f060002;
+        public static final int app_name=0x7f060000;
+        public static final int go_to_game=0x7f060003;
+        public static final int hello_world=0x7f060001;
     }
     public static final class style {
         /** 
@@ -77,9 +99,9 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f060000;
+        public static final int AppBaseTheme=0x7f070000;
         /**  Application theme. 
          */
-        public static final int AppTheme=0x7f060001;
+        public static final int AppTheme=0x7f070001;
     }
 }

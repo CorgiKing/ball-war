@@ -8,6 +8,7 @@ import org.goaler.ballwar.common.model.RoomInfo;
 import org.goaler.ballwar.common.msg.Msg;
 import org.goaler.ballwar.common.msg.MsgManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -44,6 +45,9 @@ public class NewGameActivity extends BaseActivity {
 			public void onClick(View v) {
 				saveRoomInfo();
 				startNewGame();
+				Intent intent = new Intent(NewGameActivity.this, GameRunActivity.class);
+				startActivity(intent);
+				finish();
 			}
 		});
 		btn_cancel = (Button) findViewById(R.id.btn_cancel);
@@ -129,6 +133,8 @@ public class NewGameActivity extends BaseActivity {
 			ConnectServerUtil.connect(ip, port, new ConnectServerUtil.ConCallback() {
 				@Override
 				public void call(MsgManager msgManager) {
+					//开启消息监听
+					new Thread(msgManager).start();
 					app.setMsgManager(msgManager);
 				}
 			});

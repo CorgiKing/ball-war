@@ -3,9 +3,6 @@ package org.goaler.ballwar.server.client;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.goaler.ballwar.common.entity.Cell;
 import org.goaler.ballwar.common.model.Device;
@@ -57,8 +54,15 @@ public class GameRun implements MsgFans, Runnable {
 			}
 			List<Cell> sendCs = screenshotUtil.screenshot(cs, roomRun.getAreaManager(), device.getWidth(),
 					device.getHeight());
+			
 
 			msg.setParam("cs", sendCs);
+			msg.setParam("central_x", screenshotUtil.central_x);
+			msg.setParam("central_y", screenshotUtil.central_y);
+			msg.setParam("screen_left", screenshotUtil.screen_left);
+			msg.setParam("screen_right", screenshotUtil.screen_right);
+			msg.setParam("screen_up", screenshotUtil.screen_up);
+			msg.setParam("screen_down", screenshotUtil.screen_down);
 			msgManager.output(msg);
 			System.out.println(sendCs.size());
 			try {
