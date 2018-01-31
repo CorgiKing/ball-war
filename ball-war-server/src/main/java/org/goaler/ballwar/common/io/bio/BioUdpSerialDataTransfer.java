@@ -23,14 +23,22 @@ public class BioUdpSerialDataTransfer implements DataTransfer {
 	private String destIp;
 	private int destPort;
 
-	public BioUdpSerialDataTransfer(String destIp, int destPort) throws SocketException {
-		socket = new DatagramSocket(DEFAULT_PORT);
-		this.destIp = destIp;
-		this.destPort = destPort;
+	public BioUdpSerialDataTransfer(String destIp, int destPort){
+		try {
+			socket = new DatagramSocket(DEFAULT_PORT);
+			this.destIp = destIp;
+			this.destPort = destPort;
+		} catch (SocketException e) {
+			log.error("udpDataTransfer创建失败！");
+		}
 	}
 
-	public BioUdpSerialDataTransfer(int port) throws SocketException {
-		socket = new DatagramSocket(port);
+	public BioUdpSerialDataTransfer(int port) {
+		try {
+			socket = new DatagramSocket(port);
+		} catch (SocketException e) {
+			log.error("udpDataTransfer创建失败！");
+		}
 	}
 
 	@Override

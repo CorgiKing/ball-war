@@ -7,8 +7,10 @@ import org.goaler.ballwar.app.model.ScreenData;
 import org.goaler.ballwar.app.util.ConvertCoordinateUtil;
 import org.goaler.ballwar.app.util.GLog;
 import org.goaler.ballwar.common.entity.Cell;
+import org.goaler.ballwar.common.io.bio.BioUdpSerialDataTransfer;
 import org.goaler.ballwar.common.msg.Msg;
 import org.goaler.ballwar.common.msg.MsgFans;
+import org.goaler.ballwar.common.msg.MsgManager;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -29,6 +31,10 @@ public class CombatRun implements Runnable, MsgFans {
 		drawing = true;
 		screenData = new ScreenData();
 		paint = new Paint();
+		
+		MsgManager udpMsgManager = new MsgManager(new BioUdpSerialDataTransfer(BioUdpSerialDataTransfer.DEFAULT_PORT));
+		udpMsgManager.registerFans(this);
+		new Thread(udpMsgManager).start();
 	}
 
 	@Override

@@ -1,10 +1,13 @@
 package org.goaler.ballwar.server.client;
 
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.goaler.ballwar.common.entity.Cell;
+import org.goaler.ballwar.common.io.DataTransfer;
+import org.goaler.ballwar.common.io.bio.BioUdpSerialDataTransfer;
 import org.goaler.ballwar.common.model.Device;
 import org.goaler.ballwar.common.model.Role;
 import org.goaler.ballwar.common.msg.Msg;
@@ -23,6 +26,7 @@ public class GameRun implements MsgFans, Runnable {
 	private RoomRun roomRun;
 	private Device device;
 	private MsgManager msgManager;
+	private DataTransfer udpDataTransfer;
 	private boolean running;
 
 	private List<HogSoul> hogs;
@@ -84,8 +88,8 @@ public class GameRun implements MsgFans, Runnable {
 			msg.setParam("screen_right", screenshotUtil.screen_right);
 			msg.setParam("screen_up", screenshotUtil.screen_up);
 			msg.setParam("screen_down", screenshotUtil.screen_down);
-			msgManager.output(msg);
-//			System.out.println(sendCs.size());
+			// msgManager.output(msg);
+			udpDataTransfer.output(msg);
 			try {
 				Thread.sleep(25);
 			} catch (InterruptedException e) {
@@ -138,6 +142,7 @@ public class GameRun implements MsgFans, Runnable {
 
 	public void setMsgManager(MsgManager msgManager) {
 		this.msgManager = msgManager;
+		udpDataTransfer = new BioUdpSerialDataTransfer(msgManager.getIp(), BioUdpSerialDataTransfer.DEFAULT_PORT);
 	}
 
 	public Role getRole() {
