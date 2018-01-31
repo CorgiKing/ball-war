@@ -29,9 +29,10 @@ public class TcpClientTest {
 
 			@Override
 			public void run() {
-				while(true){
 				Msg msg = new Msg();
 				msg.setCmd("Client");
+				while(true){
+					msg.setCmd(System.currentTimeMillis()+"");
 				transfer.output(msg);
 				}
 			}

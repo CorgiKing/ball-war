@@ -51,6 +51,7 @@ public class AreaEntityManager<T extends Cell> extends EntityManager<T> {
 		if (oldAreaId != null && !areaid.equals(oldAreaId)) {// 上次存入的位置areaid
 			// 删除之前的
 			areasMap.get(oldAreaId).remove(c.getId());
+			System.out.println("delete" + c.getId());
 		}
 
 		// 存入现在的

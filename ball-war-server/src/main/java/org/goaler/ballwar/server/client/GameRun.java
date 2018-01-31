@@ -37,30 +37,29 @@ public class GameRun implements MsgFans, Runnable {
 
 	@Override
 	public boolean handleMsg(Msg msg) {
-	  switch (msg.getCmd()) {
-        case "move":
-          handleMoveMsg(msg);
-          break;
+		switch (msg.getCmd()) {
+		case "move":
+			handleMoveMsg(msg);
+			break;
 
-        default:
-          return false;
-      }
-	  return true;
+		default:
+			return false;
+		}
+		return true;
 	}
 
 	private void handleMoveMsg(Msg msg) {
-     preSin = curSin;
-     preCos = curCos;
-     preSin = msg.getParam("sin", Float.class);
-     preCos = msg.getParam("cos", Float.class);
-  }
+		preSin = curSin;
+		preCos = curCos;
+		curSin = msg.getParam("sin", Float.class);
+		curCos = msg.getParam("cos", Float.class);
+	}
 
-  @Override
+	@Override
 	public void run() {
 		ScreenshotUtil<Cell> screenshotUtil = new ScreenshotUtil<>();
-		Msg msg = new Msg();
-		msg.setCmd("show");
 		while (running) {
+			// 获取活跃状态的hog
 			List<Cell> cs = new ArrayList<>();
 			for (HogSoul hogSoul : hogs) {
 				if (hogSoul.isRunning() && hogSoul.isDisplay()) {
@@ -69,8 +68,15 @@ public class GameRun implements MsgFans, Runnable {
 			}
 			List<Cell> sendCs = screenshotUtil.screenshot(cs, roomRun.getAreaManager(), device.getWidth(),
 					device.getHeight());
-			
 
+			for (Cell c : sendCs) {
+				if (c.getId() == 5015) {
+					System.out.println("x=" + c.getX() + ", y=" + c.getY());
+				}
+			}
+
+			Msg msg = new Msg();
+			msg.setCmd("show");
 			msg.setParam("cs", sendCs);
 			msg.setParam("central_x", screenshotUtil.central_x);
 			msg.setParam("central_y", screenshotUtil.central_y);
@@ -79,9 +85,9 @@ public class GameRun implements MsgFans, Runnable {
 			msg.setParam("screen_up", screenshotUtil.screen_up);
 			msg.setParam("screen_down", screenshotUtil.screen_down);
 			msgManager.output(msg);
-			System.out.println(sendCs.size());
+//			System.out.println(sendCs.size());
 			try {
-				Thread.sleep(500);
+				Thread.sleep(25);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -95,9 +101,9 @@ public class GameRun implements MsgFans, Runnable {
 			log.error("从RoomRun中没有取到Hog! role-{}", role.getName());
 			return false;
 		}
-		
-		for(HogSoul hog:hogs){
-		  hog.setGameRun(this);
+
+		for (HogSoul hog : hogs) {
+			hog.setGameRun(this);
 		}
 
 		// 初始化并且唤醒一个hog
@@ -158,36 +164,36 @@ public class GameRun implements MsgFans, Runnable {
 		this.device = device;
 	}
 
-  public float getCurSin() {
-    return curSin;
-  }
+	public float getCurSin() {
+		return curSin;
+	}
 
-  public void setCurSin(float curSin) {
-    this.curSin = curSin;
-  }
+	public void setCurSin(float curSin) {
+		this.curSin = curSin;
+	}
 
-  public float getCurCos() {
-    return curCos;
-  }
+	public float getCurCos() {
+		return curCos;
+	}
 
-  public void setCurCos(float curCos) {
-    this.curCos = curCos;
-  }
+	public void setCurCos(float curCos) {
+		this.curCos = curCos;
+	}
 
-  public float getPreSin() {
-    return preSin;
-  }
+	public float getPreSin() {
+		return preSin;
+	}
 
-  public void setPreSin(float preSin) {
-    this.preSin = preSin;
-  }
+	public void setPreSin(float preSin) {
+		this.preSin = preSin;
+	}
 
-  public float getPreCos() {
-    return preCos;
-  }
+	public float getPreCos() {
+		return preCos;
+	}
 
-  public void setPreCos(float preCos) {
-    this.preCos = preCos;
-  }
+	public void setPreCos(float preCos) {
+		this.preCos = preCos;
+	}
 
 }

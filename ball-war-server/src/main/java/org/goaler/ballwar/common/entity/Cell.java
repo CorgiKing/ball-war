@@ -49,7 +49,7 @@ public abstract class Cell implements Serializable {
 	public static int genId() {
 		return baseId.getAndIncrement();
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -63,12 +63,12 @@ public abstract class Cell implements Serializable {
 	}
 
 	public void setInnerX(int xx) {
-		if (xx - r >= GameMapManager.MIN_X && xx + r <= GameMapManager.MAX_X) {
-			x = xx;
-		} else if (xx - r < GameMapManager.MIN_X) {
+		if (xx - r < GameMapManager.MIN_X) {
 			x = GameMapManager.MIN_X + r;
 		} else if (xx + r > GameMapManager.MAX_X) {
 			x = GameMapManager.MAX_X - r;
+		} else {
+			x = xx;
 		}
 	}
 
@@ -77,12 +77,12 @@ public abstract class Cell implements Serializable {
 	}
 
 	public void setInnerY(int yy) {
-		if (yy - r >= GameMapManager.MIN_Y && yy + r <= GameMapManager.MAX_Y) {
-			y = yy;
-		} else if (yy - r < GameMapManager.MIN_Y) {
+		if (yy - r < GameMapManager.MIN_Y) {
 			y = GameMapManager.MIN_Y + r;
 		} else if (yy + r > GameMapManager.MAX_Y) {
 			y = GameMapManager.MAX_Y - r;
+		} else {
+			y = yy;
 		}
 	}
 
@@ -167,10 +167,18 @@ public abstract class Cell implements Serializable {
 	}
 
 	public boolean isDisplay() {
-      return display;
-  }
+		return display;
+	}
 
-  public void setDisplay(boolean display) {
-      this.display = display;
-  }
+	public void setDisplay(boolean display) {
+		this.display = display;
+	}
+
+	@Override
+	public String toString() {
+		return "Cell [minR=" + minR + ", id=" + id + ", x=" + x + ", y=" + y + ", r=" + r + ", background=" + background
+				+ ", density=" + density + ", mass=" + mass + ", moveStep=" + moveStep + ", moveTime=" + moveTime
+				+ ", sin=" + sin + ", cos=" + cos + ", areaId=" + areaId + ", display=" + display + "]";
+	}
+	
 }

@@ -19,7 +19,6 @@ public class ScreenshotUtil<T extends Cell> {
 	public int screen_down;
 
 	public List<T> screenshot(List<T> cells, EntityManager<T> areasManage, int screenWidth, int screenHeight) {
-		List<T> retCells = new ArrayList<T>();
 
 		Map<String, Integer> border = findBorder(cells);
 		int x_min = border.get("x_min");
@@ -99,6 +98,7 @@ public class ScreenshotUtil<T extends Cell> {
 		int minYIndex = areasManage.getIndex(y_min);
 		int maxYIndex = areasManage.getIndex(y_max);
 
+		List<T> retCells = new ArrayList<T>();
 		// 第一层分区id 左x 右x
 		for (int i = minXIndex; i <= maxXIndex; ++i) {
 			// 第一层分区id 上y 下y

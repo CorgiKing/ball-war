@@ -1,10 +1,8 @@
 package org.goaler.ballwar.server.soul;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.goaler.ballwar.common.entity.Cell;
-import org.goaler.ballwar.common.manager.GameMapManager;
 import org.goaler.ballwar.server.manager.ThreadPoolManager;
 
 public abstract class CellSoul<T extends Cell> implements Runnable {

@@ -34,9 +34,9 @@ public class TcpServerTest {
 			@Override
 			public void run() {
 				while (true) {
-					Msg msg = new Msg();
-					msg.setCmd("Server");
-					transfer.output(msg);
+//					Msg msg = new Msg();
+//					msg.setCmd("Server");
+//					transfer.output(msg);
 				}
 			}
 		});

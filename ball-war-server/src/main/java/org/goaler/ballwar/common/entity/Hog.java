@@ -30,5 +30,5 @@ public class Hog extends Cell {
 		setMoveStep(5);
 		setMoveTime(Calculator.getMoveTime(getR(), getMass()));
 	}
-
+	
 }

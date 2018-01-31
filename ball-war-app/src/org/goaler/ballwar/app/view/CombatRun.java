@@ -42,7 +42,6 @@ public class CombatRun implements Runnable, MsgFans {
 	public boolean handleMsg(Msg msg) {
 		switch (msg.getCmd()) {
 		case "show":
-			GLog.info("goaler", "show msg");
 			updateScreenData(msg);
 			draw();
 			break;
@@ -64,6 +63,10 @@ public class CombatRun implements Runnable, MsgFans {
 		screenData.setScreen_down(msg.getParam("screen_down", Integer.class));
 
 		screenData.setCells(msg.getParam("cs", List.class));
+
+		GLog.info("goaler", "cx:{},cy{}", msg.getParam("central_x", Integer.class),
+				msg.getParam("central_y", Integer.class));
+		GLog.info("goaler", "cx:{},cy{}", screenData.getCentral_x(), screenData.getCentral_y());
 
 	}
 
@@ -110,12 +113,18 @@ public class CombatRun implements Runnable, MsgFans {
 		// 画出图形
 		// System.out.println("drawing");
 		List<Cell> cells = screenData.getCells();
-		for (Cell unitData : cells) {
-			float[] point = translatePoint.translate(unitData.getX(), unitData.getY());
-			if ((point[0] + unitData.getR()) >= 0 && (point[0] - unitData.getR()) <= canvas.getWidth()
-					&& (point[1] + unitData.getR()) >= 0 && (point[1] - unitData.getR()) <= canvas.getHeight()) {
+		for (Cell cell : cells) {
+			if (!cell.isDisplay()) {
+				continue;
+			}
+			if (cell.getId() == 5015) {
+				GLog.info("goaler", "x={},y={}", cell.getX(), cell.getY());
+			}
+			float[] point = translatePoint.translate(cell.getX(), cell.getY());
+			if ((point[0] + cell.getR()) >= 0 && (point[0] - cell.getR()) <= canvas.getWidth()
+					&& (point[1] + cell.getR()) >= 0 && (point[1] - cell.getR()) <= canvas.getHeight()) {
 				// setColor(paint, unitData.background);
-				canvas.drawCircle(point[0], point[1], unitData.getR() * scale, paint);
+				canvas.drawCircle(point[0], point[1], cell.getR() * scale, paint);
 			}
 		}
 

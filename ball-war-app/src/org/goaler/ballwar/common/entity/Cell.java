@@ -44,6 +44,7 @@ public abstract class Cell implements Serializable {
 	 * 区域id
 	 */
 	private String areaId;
+	private boolean display;
 
 	public static int genId() {
 		return baseId.getAndIncrement();
@@ -165,4 +166,11 @@ public abstract class Cell implements Serializable {
 		this.areaId = areaId;
 	}
 
+	public boolean isDisplay() {
+      return display;
+  }
+
+  public void setDisplay(boolean display) {
+      this.display = display;
+  }
 }
