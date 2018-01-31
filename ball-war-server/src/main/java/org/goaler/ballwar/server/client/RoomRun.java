@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.goaler.ballwar.common.entity.Cell;
-import org.goaler.ballwar.common.entity.Hog;
-import org.goaler.ballwar.common.entity.Monad;
 import org.goaler.ballwar.common.model.Role;
 import org.goaler.ballwar.common.model.RoomInfo;
 import org.goaler.ballwar.server.manager.AreaEntityManager;
@@ -111,14 +109,12 @@ public class RoomRun {
 	}
 
 	public MonadSoul createMonadSoul() {
-		Monad monad = new Monad();
-		MonadSoul monadSoul = new MonadSoul(monad);
+		MonadSoul monadSoul = new MonadSoul();
 		return monadSoul;
 	}
 
 	public HogSoul createHogSoul() {
-		Hog hog = new Hog();
-		HogSoul hogSoul = new HogSoul(hog);
+		HogSoul hogSoul = new HogSoul();
 		allEntitys.put(hogSoul.getId(), hogSoul);
 		return hogSoul;
 	}
