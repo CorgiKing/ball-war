@@ -2,30 +2,36 @@ package org.goaler.ballwar.server.soul;
 
 import org.goaler.ballwar.common.entity.Monad;
 import org.goaler.ballwar.common.util.Calculator;
+import org.goaler.ballwar.server.client.RoomRun;
 import org.goaler.ballwar.server.manager.BackgroundManager;
 import org.goaler.ballwar.server.manager.GameMapManager;
 
 public class MonadSoul extends CellSoul<Monad> {
 
-	public MonadSoul() {
-		super(new Monad());
-		// 设置id
-		info.setId(CellSoul.genId());
+	public MonadSoul(RoomRun roomRun) {
+		super(new Monad(), roomRun);
 		// 设置半径和坐标
-		info.setMinR(15);
-		info.setR(info.getMinR());
-		setInnerX(GameMapManager.genXValue());
-		setInnerY(GameMapManager.genYValue());
+		getInfo().setMinR(15);
+		updateR(getInfo().getMinR());
 		// 设置背景
-		info.setBackground(BackgroundManager.getRandomColor());
+		getInfo().setBackground(BackgroundManager.getRandomColor());
 		// 设置密度，质量
-		info.setDensity(Calculator.DEFAULT_DENSITY);
-		info.setMass(Calculator.getMass(getR()));
+		getInfo().setDensity(Calculator.DEFAULT_DENSITY);
+
+		// 随机位置
+		randomLocation();
 	}
 
 	@Override
 	public void run() {
 
+	}
+
+	@Override
+	public void beEaten() {
+		setInnerX(GameMapManager.genXValue());
+		setInnerY(GameMapManager.genYValue());
+		getRoomRun().getAreaManager().updateEntityAreaid(getInfo());
 	}
 
 }

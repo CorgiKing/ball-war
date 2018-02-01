@@ -24,6 +24,9 @@ public class CombatRun implements Runnable, MsgFans {
 	private boolean drawing;
 	private ScreenData screenData;
 	private Paint paint;
+	
+	private int fps = 0;
+	private long fpsTime = System.currentTimeMillis();
 
 	public CombatRun(Context context, SurfaceHolder holder) {
 		this.holder = holder;
@@ -80,6 +83,17 @@ public class CombatRun implements Runnable, MsgFans {
 			return;
 		}
 
+		//计算fps
+		long t = System.currentTimeMillis();
+		if (t - fpsTime >1000) {
+			GLog.info("goaler", "FPS是{}", fps);
+			fps = 0;
+			fpsTime = t;
+		}else {
+			fps++;
+		}
+		
+		
 		canvas.drawColor(context.getResources().getColor(R.color.map_backcolor));
 
 		ConvertCoordinateUtil translatePoint = new ConvertCoordinateUtil();
@@ -99,9 +113,6 @@ public class CombatRun implements Runnable, MsgFans {
 		for (Cell cell : cells) {
 			if (!cell.isDisplay()) {
 				continue;
-			}
-			if (cell.getId() == 5015) {
-				GLog.info("goaler", "x={},y={}", cell.getX(), cell.getY());
 			}
 			float[] point = translatePoint.translate(cell.getX(), cell.getY());
 			if ((point[0] + cell.getR()) >= 0 && (point[0] - cell.getR()) <= canvas.getWidth()

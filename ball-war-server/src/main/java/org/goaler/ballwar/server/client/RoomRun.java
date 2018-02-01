@@ -109,12 +109,12 @@ public class RoomRun {
 	}
 
 	public MonadSoul createMonadSoul() {
-		MonadSoul monadSoul = new MonadSoul();
+		MonadSoul monadSoul = new MonadSoul(this);
 		return monadSoul;
 	}
 
 	public HogSoul createHogSoul() {
-		HogSoul hogSoul = new HogSoul();
+		HogSoul hogSoul = new HogSoul(this);
 		allEntitys.put(hogSoul.getId(), hogSoul);
 		return hogSoul;
 	}
@@ -160,6 +160,10 @@ public class RoomRun {
 
 	public EntityManager<Cell> getAreaManager() {
 		return areaManager;
+	}
+
+	public Map<Integer, CellSoul<?>> getAllEntitys() {
+		return allEntitys;
 	}
 
 }

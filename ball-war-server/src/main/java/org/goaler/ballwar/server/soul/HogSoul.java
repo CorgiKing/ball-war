@@ -4,38 +4,37 @@ import java.util.List;
 
 import org.goaler.ballwar.common.entity.Cell;
 import org.goaler.ballwar.common.entity.Hog;
+import org.goaler.ballwar.common.entity.Monad;
 import org.goaler.ballwar.common.util.Calculator;
 import org.goaler.ballwar.server.client.GameRun;
+import org.goaler.ballwar.server.client.RoomRun;
 import org.goaler.ballwar.server.manager.BackgroundManager;
-import org.goaler.ballwar.server.manager.GameMapManager;
 import org.goaler.ballwar.server.util.ScreenshotUtil;
 
 public class HogSoul extends CellSoul<Hog> {
 	private GameRun gameRun;
 
-	public HogSoul() {
-		super(new Hog());
-		// 设置id
-		info.setId(CellSoul.genId());
+	public HogSoul(RoomRun roomRun) {
+		super(new Hog(), roomRun);
+
 		// 设置半径和坐标
-		info.setMinR(50);
-		info.setR(info.getMinR());
-		setInnerX(GameMapManager.genXValue());
-		setInnerY(GameMapManager.genYValue());
+		getInfo().setMinR(50);
+		updateR(getInfo().getMinR());
+		// 设置密度
+		getInfo().setDensity(Calculator.DEFAULT_DENSITY);
 		// 设置背景
-		info.setBackground(BackgroundManager.getRandomColor());
-		// 设置密度，质量
-		info.setDensity(Calculator.DEFAULT_DENSITY);
-		info.setMass(Calculator.getMass(getR()));
-		// 设置移动属性
-		info.setMoveStep(5);
-		info.setMoveTime(Calculator.getMoveTime(getR(), info.getMass()));
+		getInfo().setBackground(BackgroundManager.getRandomColor());
+
+		// 随机位置
+		randomLocation();
 	}
 
 	@Override
 	public void run() {
 		while (isRunning()) {
 			move(gameRun.getCurSin(), gameRun.getCurCos());
+
+			eatOther();
 
 			try {
 				Thread.sleep(getInfo().getMoveTime());
@@ -45,24 +44,71 @@ public class HogSoul extends CellSoul<Hog> {
 		}
 	}
 
-	@Override
-	public boolean move(float sin, float cos) {
-		boolean move = super.move(sin, cos);
-		if (move) {
-			getGameRun().getRoomRun().getAreaManager().updateEntityAreaid(this.getInfo());
+	public void eatOther() {
+		List<Cell> cells = ScreenshotUtil.getAroundByBorder(getInfo(), getGameRun().getRoomRun().getAreaManager());
+		for (Cell cell : cells) {
+			if (!cell.isDisplay() || getInfo().getId() == cell.getId()) {
+				continue;
+			}
+			if (cell instanceof Monad) {
+				// 单细胞生物
+				eatMonad((Monad) cell);
+			} else if (cell instanceof Hog) {
+				eatHog((Hog) cell);
+			}
+
 		}
-		return move;
 	}
-	
-	public void eatOther(){
-	  List<Cell> cells = ScreenshotUtil.getAroundByBorder(info, getGameRun().getRoomRun().getAreaManager());
-	  for(Cell cell:cells){
-	    if (info.getId() == cell.getId()) {
-	      //如果是自己
-          continue;
-        }
-	    
-	  }
+
+	/**
+	 * 吃掉单细胞生物
+	 * 
+	 * @param monad
+	 * @return
+	 */
+	public boolean eatMonad(Monad monad) {
+		double distance = getDistance(monad.getX(), monad.getY());
+		if ((this.getR() - distance) >= 0) {// 覆盖直径的1/2,
+			this.updateMass(this.getMass() + monad.getMass());// 体重增加
+			MonadSoul soul = (MonadSoul) getRoomRun().getAllEntitys().get(monad.getId());
+			soul.beEaten();
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * 吃掉贪吃猪
+	 * 
+	 * @param hog
+	 * @return
+	 */
+	public boolean eatHog(Hog hog) {
+		double distance = getDistance(hog.getX(), hog.getY());
+		if ((this.getR() - distance) >= hog.getR() / 2) {// 覆盖直径的3/4,
+			this.updateMass(this.getMass() + hog.getMass());// 体重增加
+			HogSoul soul = (HogSoul) getRoomRun().getAllEntitys().get(hog.getId());
+			soul.beEaten();
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public void beEaten() {
+		reInit();
+		gameRun.keepAlive();
+	}
+
+	@Override
+	public void reInit() {
+		// 初始大小
+		updateR(getInfo().getMinR());
+		// 关闭运行
+		setRunning(false);
+		// 关闭显示
+		setDisplay(false);
+
 	}
 
 	public GameRun getGameRun() {

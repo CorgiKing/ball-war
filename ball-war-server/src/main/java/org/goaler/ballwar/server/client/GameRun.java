@@ -1,6 +1,5 @@
 package org.goaler.ballwar.server.client;
 
-import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -73,12 +72,6 @@ public class GameRun implements MsgFans, Runnable {
 			List<Cell> sendCs = screenshotUtil.screenshot(cs, roomRun.getAreaManager(), device.getWidth(),
 					device.getHeight());
 
-			for (Cell c : sendCs) {
-				if (c.getId() == 5015) {
-					System.out.println("x=" + c.getX() + ", y=" + c.getY());
-				}
-			}
-
 			Msg msg = new Msg();
 			msg.setCmd("show");
 			msg.setParam("cs", sendCs);
@@ -111,29 +104,54 @@ public class GameRun implements MsgFans, Runnable {
 		}
 
 		// 初始化并且唤醒一个hog
-		HogSoul hog = awakenHog();
-		if (hog == null) {
-			log.error("唤醒第一个hog失败！hogs-{}", hogs);
-			return false;
-		}
-		hog.actUp();
+		awakenHog();
 
 		// 启动GameRun
 		running = true;
 		ThreadPoolManager.getThreadPoolInstance().execute(this);
 		return true;
 	}
+	
+	public void awakenHog(){
+		HogSoul hog = findQuietHog();
+		if (hog != null) {
+			hog.actUp();
+		}
+	}
 
-	public HogSoul awakenHog() {
+	/**
+	 * 查找未running的hog
+	 * 
+	 * @return
+	 */
+	public HogSoul findQuietHog() {
 
 		HogSoul hog = null;
 		for (int i = 0; i < hogs.size(); ++i) {
 			boolean flag = hogs.get(i).compareAndSetRunning(false, true);
 			if (flag) {
 				hog = hogs.get(i);
+				break;
 			}
 		}
 		return hog;
+	}
+
+	public void keepAlive() {
+		boolean alive = false;
+		for (int i = 0; i < hogs.size(); ++i) {
+			if (hogs.get(i).isRunning()) {
+				alive = true;
+				break;
+			}
+		}
+		
+		if (!alive) {
+			HogSoul hog = findQuietHog();
+			hog.randomLocation();
+			hog.actUp();
+		}
+		
 	}
 
 	public MsgManager getMsgManager() {
