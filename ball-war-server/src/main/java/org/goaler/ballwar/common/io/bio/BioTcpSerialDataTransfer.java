@@ -27,8 +27,7 @@ public class BioTcpSerialDataTransfer implements DataTransfer {
 	@Override
 	public boolean output(Serializable serial) {
 		try {
-			oos = new ObjectOutputStream(socket.getOutputStream());
-			oos.writeObject(serial);
+			oos.writeUnshared(serial);
 			return true;
 		} catch (IOException e) {
 			log.info("数据发送失败！{}",e.getMessage());
@@ -39,7 +38,6 @@ public class BioTcpSerialDataTransfer implements DataTransfer {
 	@Override
 	public <T> T input(Class<T> clazz) {
 		try {
-			ois = new ObjectInputStream(socket.getInputStream());
 			Object obj = ois.readObject();
 			if (clazz.isInstance(obj)) {
 				return clazz.cast(obj);

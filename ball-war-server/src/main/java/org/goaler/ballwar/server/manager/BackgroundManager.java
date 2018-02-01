@@ -1,4 +1,4 @@
-package org.goaler.ballwar.common.manager;
+package org.goaler.ballwar.server.manager;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.goaler.ballwar.common.entity.Cell;
 import org.goaler.ballwar.common.entity.Hog;
-import org.goaler.ballwar.common.manager.BackgroundManager;
-import org.goaler.ballwar.common.manager.GameMapManager;
 import org.goaler.ballwar.common.util.Calculator;
 import org.goaler.ballwar.server.client.GameRun;
+import org.goaler.ballwar.server.manager.BackgroundManager;
+import org.goaler.ballwar.server.manager.GameMapManager;
 import org.goaler.ballwar.server.util.ScreenshotUtil;
 
 public class HogSoul extends CellSoul<Hog> {

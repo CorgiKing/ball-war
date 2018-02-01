@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.goaler.ballwar.common.entity.Cell;
-import org.goaler.ballwar.common.manager.GameMapManager;
 
 public class AreaEntityManager<T extends Cell> extends EntityManager<T> {
 

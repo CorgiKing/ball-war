@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.goaler.ballwar.common.entity.Cell;
-import org.goaler.ballwar.common.manager.GameMapManager;
 import org.goaler.ballwar.server.manager.EntityManager;
+import org.goaler.ballwar.server.manager.GameMapManager;
 
 public class ScreenshotUtil<T extends Cell> {
 
