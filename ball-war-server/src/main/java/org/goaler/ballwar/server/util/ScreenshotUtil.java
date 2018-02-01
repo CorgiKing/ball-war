@@ -18,6 +18,40 @@ public class ScreenshotUtil<T extends Cell> {
 	public int screen_up;
 	public int screen_down;
 
+	/**
+	 * 获取周围可能被eat的Cell
+	 * @param cell
+	 * @param areasManage
+	 * @return
+	 */
+	public static <T extends Cell> List<T> getAroundByBorder(T cell, EntityManager<T> areasManage) {
+
+      Map<String, Integer> border = findBorder(cell);
+      int x_min = border.get("x_min");
+      int x_max = border.get("x_max");
+      int y_min = border.get("y_min");
+      int y_max = border.get("y_max");
+
+      // 左上角，右下角的分区id
+      int minXIndex = areasManage.getIndex(x_min);
+      int maxXIndex = areasManage.getIndex(x_max);
+      int minYIndex = areasManage.getIndex(y_min);
+      int maxYIndex = areasManage.getIndex(y_max);
+
+      List<T> retCells = new ArrayList<T>();
+      // 第一层分区id 左x 右x
+      for (int i = minXIndex; i <= maxXIndex; ++i) {
+          // 第一层分区id 上y 下y
+          for (int j = minYIndex; j <= maxYIndex; ++j) {
+
+              retCells.addAll(areasManage.getAreaEntities(i + areasManage.KEY_SEP_SIGN + j));
+
+          }
+      }
+
+      return retCells;
+  }
+	
 	public List<T> screenshot(List<T> cells, EntityManager<T> areasManage, int screenWidth, int screenHeight) {
 
 		Map<String, Integer> border = findBorder(cells);
@@ -112,6 +146,43 @@ public class ScreenshotUtil<T extends Cell> {
 		return retCells;
 	}
 
+	
+	/**
+     * 判断cell边界
+     * 
+     * @param c
+     * @return
+     */
+    public static <T extends Cell> Map<String, Integer> findBorder(T c) {
+        Map<String, Integer> borderMap = new HashMap<String, Integer>();
+
+        int x_min = GameMapManager.WIDTH, x_max = 0;
+        int y_min = GameMapManager.HEIGHT, y_max = 0;
+        int t;
+        t = c.getX() - c.getR();// 最左边判断
+        if (t < x_min) {
+            x_min = t;
+        }
+        t = c.getX() + c.getR();// 最右边判断
+        if (t > x_max) {
+            x_max = t;
+        }
+        t = c.getY() - c.getR();// 最上边判断
+        if (t < y_min) {
+            y_min = t;
+        }
+        t = c.getY() + c.getR();// 最下边判断
+        if (t > y_max) {
+            y_max = t;
+        }
+        borderMap.put("x_min", x_min);
+        borderMap.put("x_max", x_max);
+        borderMap.put("y_min", y_min);
+        borderMap.put("y_max", y_max);
+
+        return borderMap;
+    }
+	
 	/**
 	 * 判断cells的边界
 	 * 
@@ -149,4 +220,5 @@ public class ScreenshotUtil<T extends Cell> {
 
 		return borderMap;
 	}
+	
 }

@@ -1,10 +1,14 @@
 package org.goaler.ballwar.server.soul;
 
+import java.util.List;
+
+import org.goaler.ballwar.common.entity.Cell;
 import org.goaler.ballwar.common.entity.Hog;
 import org.goaler.ballwar.common.manager.BackgroundManager;
 import org.goaler.ballwar.common.manager.GameMapManager;
 import org.goaler.ballwar.common.util.Calculator;
 import org.goaler.ballwar.server.client.GameRun;
+import org.goaler.ballwar.server.util.ScreenshotUtil;
 
 public class HogSoul extends CellSoul<Hog> {
 	private GameRun gameRun;
@@ -48,6 +52,17 @@ public class HogSoul extends CellSoul<Hog> {
 			getGameRun().getRoomRun().getAreaManager().updateEntityAreaid(this.getInfo());
 		}
 		return move;
+	}
+	
+	public void eatOther(){
+	  List<Cell> cells = ScreenshotUtil.getAroundByBorder(info, getGameRun().getRoomRun().getAreaManager());
+	  for(Cell cell:cells){
+	    if (info.getId() == cell.getId()) {
+	      //如果是自己
+          continue;
+        }
+	    
+	  }
 	}
 
 	public GameRun getGameRun() {
