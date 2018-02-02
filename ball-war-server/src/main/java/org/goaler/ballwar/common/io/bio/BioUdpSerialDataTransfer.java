@@ -25,7 +25,7 @@ public class BioUdpSerialDataTransfer implements DataTransfer {
 
 	public BioUdpSerialDataTransfer(String destIp, int destPort){
 		try {
-			socket = new DatagramSocket(DEFAULT_PORT);
+			socket = new DatagramSocket();
 			this.destIp = destIp;
 			this.destPort = destPort;
 		} catch (SocketException e) {

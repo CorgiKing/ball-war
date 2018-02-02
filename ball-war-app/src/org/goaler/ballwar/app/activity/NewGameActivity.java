@@ -7,6 +7,8 @@ import org.goaler.ballwar.common.model.Device;
 import org.goaler.ballwar.common.model.RoomInfo;
 import org.goaler.ballwar.common.msg.Msg;
 import org.goaler.ballwar.common.msg.MsgManager;
+import org.goaler.ballwar.server.core.Server;
+import org.goaler.ballwar.server.core.ServerFactory;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -44,6 +46,7 @@ public class NewGameActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				saveRoomInfo();
+				startServer();
 				startNewGame();
 				Intent intent = new Intent(NewGameActivity.this, GameRunActivity.class);
 				startActivity(intent);
@@ -139,5 +142,16 @@ public class NewGameActivity extends BaseActivity {
 				}
 			});
 		}
+	}
+	
+	public void startServer(){
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				Server server = ServerFactory.getInstance();
+				server.start();
+			}
+		}).start();
 	}
 }
