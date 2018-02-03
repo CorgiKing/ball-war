@@ -7,9 +7,8 @@ import org.goaler.ballwar.common.entity.Cell;
 import org.goaler.ballwar.common.util.Calculator;
 import org.goaler.ballwar.server.client.RoomRun;
 import org.goaler.ballwar.server.manager.GameMapManager;
-import org.goaler.ballwar.server.manager.ThreadPoolManager;
 
-public abstract class CellSoul<T extends Cell> implements Runnable {
+public abstract class CellSoul<T extends Cell>{
 	private T info;
 	private AtomicBoolean running = new AtomicBoolean();
 	private static final AtomicInteger baseId = new AtomicInteger();
@@ -42,14 +41,6 @@ public abstract class CellSoul<T extends Cell> implements Runnable {
 
 	public static int genId() {
 		return baseId.getAndIncrement();
-	}
-
-	/**
-	 * 启动运行，并显示
-	 */
-	public void actUp() {
-		ThreadPoolManager.getThreadPoolInstance().execute(this);
-		setDisplay(true);
 	}
 
 	public void randomLocation() {

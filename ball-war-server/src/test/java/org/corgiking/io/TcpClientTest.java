@@ -12,7 +12,7 @@ public class TcpClientTest {
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		
 		Socket socket = new Socket("localhost", 5019);
-		BioTcpSerialDataTransfer transfer = new BioTcpSerialDataTransfer(socket);
+		final BioTcpSerialDataTransfer transfer = new BioTcpSerialDataTransfer(socket);
 		
 		new Thread(new Runnable() {
 

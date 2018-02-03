@@ -18,12 +18,12 @@ import org.slf4j.LoggerFactory;
 public class BioUdpSerialDataTransfer implements DataTransfer {
 	private static final Logger log = LoggerFactory.getLogger(BioUdpSerialDataTransfer.class);
 	public static final int DEFAULT_PORT = 5019;
-	
+
 	private DatagramSocket socket;
 	private String destIp;
 	private int destPort;
 
-	public BioUdpSerialDataTransfer(String destIp, int destPort){
+	public BioUdpSerialDataTransfer(String destIp, int destPort) {
 		try {
 			socket = new DatagramSocket();
 			this.destIp = destIp;
@@ -49,7 +49,7 @@ public class BioUdpSerialDataTransfer implements DataTransfer {
 			oo.writeObject(seria);
 			oo.flush();
 			byte[] buf = bo.toByteArray();
-			
+//			log.info("发送数据大小：{}", buf.length);
 			InetAddress address = InetAddress.getByName(destIp);
 			DatagramPacket packet = new DatagramPacket(buf, buf.length, address, destPort);
 			socket.send(packet);
@@ -75,7 +75,7 @@ public class BioUdpSerialDataTransfer implements DataTransfer {
 				return clazz.cast(obj);
 			}
 		} catch (IOException | ClassNotFoundException e) {
-			log.info("接收数据失败！{}",e.getMessage());
+			log.info("接收数据失败！{}", e.getMessage());
 		}
 		return null;
 

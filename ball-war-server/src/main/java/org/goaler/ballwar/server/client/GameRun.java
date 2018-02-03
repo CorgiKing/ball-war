@@ -3,6 +3,7 @@ package org.goaler.ballwar.server.client;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.goaler.ballwar.common.entity.Cell;
 import org.goaler.ballwar.common.io.DataTransfer;
@@ -28,6 +29,7 @@ public class GameRun implements MsgFans, Runnable {
 	private DataTransfer udpDataTransfer;
 	private boolean running;
 
+	private AtomicInteger aliveHogNum = new AtomicInteger();
 	private List<HogSoul> hogs;
 
 	private volatile float curSin = ThreadLocalRandom.current().nextFloat();
@@ -35,22 +37,62 @@ public class GameRun implements MsgFans, Runnable {
 	private volatile float preSin;
 	private volatile float preCos;
 
-	public GameRun() {
-	}
-
 	@Override
 	public boolean handleMsg(Msg msg) {
 		switch (msg.getCmd()) {
 		case "move":
 			handleMoveMsg(msg);
 			break;
-
+		case "split":
+			handleSplitMsg(msg);
+			break;
+		case "vomit":
+			handleVomitMsg(msg);
+			break;
 		default:
 			return false;
 		}
 		return true;
 	}
 
+	/**
+	 * 吐
+	 * @param msg
+	 */
+	private void handleVomitMsg(Msg msg) {
+		for(HogSoul hog:hogs){
+			if (hog.isRunning() && hog.isDisplay()) {
+				hog.vomit();
+			}
+		}
+	}
+
+	/**
+	 * 分裂
+	 * 
+	 * @param msg
+	 */
+	private void handleSplitMsg(Msg msg) {
+		List<HogSoul> hs = new ArrayList<>();
+		for (HogSoul hog : hogs) {
+			if (hog.isRunning() && hog.isDisplay()) {
+				HogSoul splitHog = hog.split();
+				if (splitHog != null) {					
+					hs.add(splitHog);
+				}
+			}
+		}
+		//统一唤醒
+		for (HogSoul hog : hs) {
+			hog.actUp();
+		}
+	}
+
+	/**
+	 * 移动
+	 * 
+	 * @param msg
+	 */
 	private void handleMoveMsg(Msg msg) {
 		preSin = curSin;
 		preCos = curCos;
@@ -83,6 +125,7 @@ public class GameRun implements MsgFans, Runnable {
 			msg.setParam("screen_down", screenshotUtil.screen_down);
 			// msgManager.output(msg);
 			udpDataTransfer.output(msg);
+//			log.info("发送个数：{}",sendCs.size());
 			try {
 				Thread.sleep(25);
 			} catch (InterruptedException e) {
@@ -98,7 +141,7 @@ public class GameRun implements MsgFans, Runnable {
 			log.error("从RoomRun中没有取到Hog! role-{}", role.getName());
 			return false;
 		}
-
+		// 绑定到GameRun
 		for (HogSoul hog : hogs) {
 			hog.setGameRun(this);
 		}
@@ -111,8 +154,11 @@ public class GameRun implements MsgFans, Runnable {
 		ThreadPoolManager.getThreadPoolInstance().execute(this);
 		return true;
 	}
-	
-	public void awakenHog(){
+
+	/**
+	 * 唤醒一个安静的hog
+	 */
+	public void awakenHog() {
 		HogSoul hog = findQuietHog();
 		if (hog != null) {
 			hog.actUp();
@@ -131,12 +177,16 @@ public class GameRun implements MsgFans, Runnable {
 			boolean flag = hogs.get(i).compareAndSetRunning(false, true);
 			if (flag) {
 				hog = hogs.get(i);
+				aliveHogNum.incrementAndGet();
 				break;
 			}
 		}
 		return hog;
 	}
 
+	/**
+	 * 保证至少有一个hog处于活跃状态
+	 */
 	public void keepAlive() {
 		boolean alive = false;
 		for (int i = 0; i < hogs.size(); ++i) {
@@ -145,13 +195,17 @@ public class GameRun implements MsgFans, Runnable {
 				break;
 			}
 		}
-		
+
 		if (!alive) {
 			HogSoul hog = findQuietHog();
 			hog.randomLocation();
 			hog.actUp();
 		}
-		
+
+	}
+
+	public boolean isFull() {
+		return aliveHogNum.intValue() >= hogs.size();
 	}
 
 	public MsgManager getMsgManager() {

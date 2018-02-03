@@ -23,11 +23,6 @@ public class MonadSoul extends CellSoul<Monad> {
 	}
 
 	@Override
-	public void run() {
-
-	}
-
-	@Override
 	public void beEaten() {
 		setInnerX(GameMapManager.genXValue());
 		setInnerY(GameMapManager.genYValue());

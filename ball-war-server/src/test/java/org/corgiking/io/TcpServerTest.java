@@ -15,7 +15,7 @@ public class TcpServerTest {
 		ServerSocket server = new ServerSocket(5019);
 		Socket clientSocket = server.accept();
 
-		BioTcpSerialDataTransfer transfer = new BioTcpSerialDataTransfer(clientSocket);
+		final BioTcpSerialDataTransfer transfer = new BioTcpSerialDataTransfer(clientSocket);
 
 		Thread t1 = new Thread(new Runnable() {
 

@@ -25,7 +25,11 @@ public class MsgManager implements Runnable {
 				}
 				continue;
 			}
-			noticeMsgUpdate(msg);
+			try {
+				noticeMsgUpdate(msg);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			if (Thread.currentThread().isInterrupted()) {
 				break;
 			}
@@ -75,5 +79,5 @@ public class MsgManager implements Runnable {
 	public void setDataTransfer(DataTransfer dataTransfer) {
 		this.dataTransfer = dataTransfer;
 	}
-	
+
 }

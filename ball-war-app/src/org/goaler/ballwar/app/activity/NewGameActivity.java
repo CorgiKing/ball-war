@@ -46,7 +46,6 @@ public class NewGameActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				saveRoomInfo();
-				startServer();
 				startNewGame();
 				Intent intent = new Intent(NewGameActivity.this, GameRunActivity.class);
 				startActivity(intent);

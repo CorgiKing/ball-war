@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.goaler.ballwar.common.entity.Cell;
@@ -14,6 +15,7 @@ import org.goaler.ballwar.server.manager.EntityManager;
 import org.goaler.ballwar.server.soul.CellSoul;
 import org.goaler.ballwar.server.soul.HogSoul;
 import org.goaler.ballwar.server.soul.MonadSoul;
+import org.goaler.ballwar.server.soul.VoleSoul;
 
 /**
  * 游戏房间运行类
@@ -49,7 +51,7 @@ public class RoomRun {
 	/**
 	 * 所有的entity
 	 */
-	private Map<Integer, CellSoul<?>> allEntitys = new HashMap<>();
+	private Map<Integer, CellSoul<?>> allEntitys = new ConcurrentHashMap<>(6000);
 	/**
 	 * 所有的monad
 	 */
@@ -106,6 +108,12 @@ public class RoomRun {
 			monads.put(monadSoul.getId(), monadSoul);
 			areaManager.addEntity(monadSoul.getInfo());
 		}
+	}
+
+	public VoleSoul createVole() {
+		VoleSoul vole = new VoleSoul(this);
+		allEntitys.put(vole.getId(), vole);
+		return vole;
 	}
 
 	public MonadSoul createMonadSoul() {
